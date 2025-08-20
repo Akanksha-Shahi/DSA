@@ -1,0 +1,17 @@
+#include<iostream>
+using namespace std;
+void printDivisors( int n){
+  cout<< "Divisors of "<< n << " are: ";
+  for (int i = 1; i <= n; i++){
+    if (n % i == 0){
+      cout<< i<< " ";
+    }else{
+      continue;
+}}};
+int main(){
+  int n =28;
+  cout<< " Finding divisors for: "<< n << endl;
+  printDivisors(n);
+  cout<< endl;
+  return 0;
+}
