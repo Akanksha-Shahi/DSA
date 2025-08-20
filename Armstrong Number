@@ -1,0 +1,22 @@
+#include<iostream>
+using namespace std;
+int armstrong (int n){
+  int duplicate = n;      // Store the original number
+  int sum = 0;
+  while (n>0){
+    int lastdigit = n % 10;
+    sum = sum + (lastdigit * lastdigit * lastdigit);
+    n = n / 10;
+    }
+  if (duplicate == sum){
+    cout<<" The number is armstrong." << endl;
+  } else{
+    cout<<" The number is not an armstrong." << endl;
+  }
+};
+int main (){
+  int n = 371;
+  cout<< " Checking armstrong for: "<< n << endl;
+  armstrong (n);
+  return 0;
+}
