@@ -1,0 +1,14 @@
+// Multiple Recursion calls ( FIBONACCI )
+#include <iostream>
+using namespace std;
+int f (int n ){
+    if (n<=1) return n;       // Base case: return n if it's 0 or 1
+    int last = f(n-1);
+    int last2 = f(n-2);
+    return last + last2;     // Return the sum of the two previous Fibonacci numbers
+}
+int main(){
+    int n = 5;
+    cout << f(n) << endl;
+    return 0;
+}
