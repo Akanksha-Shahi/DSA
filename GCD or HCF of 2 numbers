@@ -1,0 +1,13 @@
+#include<iostream>
+using namespace std;
+int gcd ( int a, int b){
+  for (int i= min (a,b); i>=1; i--){
+    if (a % i ==0 && b % i==0){
+      return i;       // Return the first common divisor found
+      break;}}}      // Exit the loop after finding the GCD
+int main (){
+  int a= 48, b = 18;
+  cout <<  "Finding GCD for: " << a << " and " << b << endl;
+  cout << "GCD is: " << gcd(a, b) << endl;
+  return 0;
+}        
