@@ -1,0 +1,12 @@
+#include <iostream>
+using namespace std;
+bool f(int i, string &s) {
+    if (i >= s.length() / 2) return true;         // Base case: if we reach the middle
+    if (s[i] != s[s.length() - i - 1]) return false;
+    return f(i + 1, s);                           // Recursive call to check the next characters
+}
+int main() {
+    string s="madsm";
+    cout<< f(0,s) << endl;
+    return 0;
+}
