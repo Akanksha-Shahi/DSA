@@ -1,0 +1,18 @@
+// character hashing
+#include <iostream>
+using namespace std;
+int main(){
+    string s;
+    cin>>s;
+    // precompute
+    int hash[26] = {0};                 // if uppercase included {hash[256] = {0}; }
+    for(int i = 0; i < s.size(); i++){
+        hash[s[i] - 'a']++;             // formula to map character to index (only lower case) [ char - "a"]
+    }                                   // hash['a'] = 0, hash['b'] = 1, ..., hash['z'] = 25; for uppercase :- hash[s[i]]
+    int q; cin>> q;
+    while(q--){
+        char c; cin>> c;
+        cout<< hash[c - 'a'] << endl;   // fetch
+    }
+    return 0;
+}
