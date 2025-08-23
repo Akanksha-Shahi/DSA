@@ -1,0 +1,45 @@
+// 1. To search for largest element in an array
+// The brute-force approach is to search for it using merge sort or quick sort
+// but the optimal approach is to make the 1st element as largest then traverse through array and compare 1st elemnent with rest of the elements
+#include <iostream>
+using namespace std;
+int main(){
+    int a[] = {1, 5, 3, 9, 2, 8, 6, 4, 7};
+    int n = sizeof(a)/sizeof(a[0]);
+    int largest = a[0];
+    
+    for (int i = 0; i<n; i++){
+        if (a[i]>largest){
+            largest = a[i];
+        }}
+        cout << "Largest element is: "<< largest << endl;
+    
+   return 0;
+} 
+
+
+
+
+// 2. To serach for 2nd largest element in an array
+// brute-force approach is to sort the array and return the 2nd last element
+#include<iostream>
+using namespace std;
+int main(){
+    int a[] = {1, 5, 3, 9, 2, 8, 6, 4, 7};
+    int n = sizeof(a)/sizeof(a[0]);
+    int largest = a[0];
+    int second_largest = -1;
+    
+    for (int i = 1; i<n; i++){
+        if (a[i]>largest){
+            second_largest = largest;
+            largest = a[i];
+            }
+        else if( a[i]< largest && a[i]>second_largest){
+            second_largest = a[i];
+        }
+    }
+    cout << "Second largest element is: "<< second_largest << endl;
+    
+   return 0;
+}
