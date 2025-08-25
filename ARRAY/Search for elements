@@ -43,3 +43,51 @@ int main(){
     
    return 0;
 }
+
+
+// better way:- first pass will be for to search first element and then search for 2nd largest element
+#include<iostream>
+using namespace std;
+int main(){
+    int a[] = {1, 5, 3, 9, 2, 8, 6, 4, 7};
+    int n = sizeof(a)/sizeof(a[0]);
+    int largest = a[0];
+    for (int i=0; i<n; i++){
+        if ( a[i]> largest ){
+            largest = a[i];
+        }
+    };
+    int seclargest = -1;
+    for (int i = 0; i<n; i++){
+        if ( a[i]> seclargest && a[i]!= largest){
+            seclargest = a[i];
+        }}
+    cout<<" Second largest element is "<< seclargest << endl;
+    return 0;
+}
+
+// optimal way:- concept similar to if marks> topper's then topper shifts to 2nd position
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int a[] = {1, 5, 3, 9, 2, 8, 6, 4, 7};
+    int n = sizeof(a) / sizeof(a[0]);
+    int largest = a[0];
+    int seclargest = -1;
+
+    for (int i = 1; i < n; i++) {
+        if (a[i] > largest) {
+            seclargest = largest;
+            largest = a[i];
+        }
+        else if (a[i] < largest && a[i] > seclargest) {
+            seclargest = a[i];
+        }
+    }
+
+    cout << "Second largest element is: " << seclargest << endl;
+
+    return 0;
+}
