@@ -1,0 +1,31 @@
+// Left rotate an array by d places
+#include <iostream>
+using namespace std;
+void leftrotate( int a[], int n, int d){
+    d = d % n;
+    int* temp = new int[d];
+    for (int i = 0; i < d; i++) {
+        temp[i] = a[i];
+    }
+    for (int i = d; i < n; i++) {
+        a[i - d] = a[i];
+    }
+    for (int i = n - d; i < n; i++) {
+        a[i] = temp[i - (n - d)];
+    }
+    delete[] temp;
+}
+int main(){
+    int n; cin>> n;
+    int* a = new int[n];
+    for ( int i=0; i<n; i++){
+        cin>> a[i];
+    }
+    int d; cin>> d;
+    leftrotate(a, n, d);
+    for ( int i=0; i<n; i++){
+        cout<< a[i]<<" ";
+    }
+    delete[] a;
+    return 0;
+}
