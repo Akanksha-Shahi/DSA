@@ -1,0 +1,80 @@
+// Move all zeros to the end of the array
+// brute- force approach
+#include <iostream>
+#include <vector>   
+using namespace std;
+// Function to move all zeros in the array to the end while maintaining the order of non-zero
+vector<int> moveZeroes(int n, vector<int> a) {
+    vector<int> temp;
+    // Iterate through the original array and add non-zero elements to 'temp'
+    for (int i = 0; i < n; i++) {
+        if (a[i] != 0) {
+            temp.push_back(a[i]);
+        }
+    }
+    int nonZero = temp.size();
+    
+    // Corrected loop to copy all non-zero elements
+    for (int i = 0; i < nonZero; i++) {
+        a[i] = temp[i];
+    }
+    
+    // Fills the remaining positions with zeros
+    for (int i = nonZero; i < n; i++) {
+        a[i] = 0;
+    }
+    
+    return a;
+}
+int main() {
+    // Example usage
+    vector<int> arr = {0, 1, 0, 3, 12};
+    int n = arr.size();
+
+    vector<int> result = moveZeroes(n, arr);
+
+    // Print the modified array
+    for (int i = 0; i < n; i++) {
+        cout << result[i] << " ";
+    }
+    cout << endl; // Prints a new line for clean output
+
+    return 0;
+}
+
+// optimal approach
+#include <iostream>
+#include <vector>   
+using namespace std;
+vector<int> moveZeroes(int n, vector<int> a) {
+    int j = -1; // Pointer for the position of the last non-zero element
+    for (int i = 0; i < n; i++) {
+        if (a[i] == 0) {
+            j = i; // Update 'j' to the index of the first zero found
+            break; // Exit the loop after finding the first zero
+        } 
+        }
+        // no one zero numbers
+        if ( j== -1) return a;
+        for ( int i=j+1; i<n; i++){
+            if ( a[i] != 0){
+                swap( a[i], a[j]); // Swap the current non-zero element with the element at index 'j'
+                j++; // Move 'j' to the next position
+            }}
+        return a;}
+int main() {
+    // Example usage
+    vector<int> arr = {0, 1, 0, 3, 12};
+    int n = arr.size();
+
+    vector<int> result = moveZeroes(n, arr);
+
+    // Print the modified array
+    for (int i = 0; i < n; i++) {
+        cout << result[i] << " ";
+    }
+    cout << endl; // Prints a new line for clean output
+
+    return 0;
+}
+
