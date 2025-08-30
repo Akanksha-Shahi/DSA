@@ -2,30 +2,33 @@
 #include <iostream>
 using namespace std;
 void leftrotate( int a[], int n, int d){
-    d = d % n;
-    int* temp = new int[d];
+    // 'd' is the number of places to left rotate the array
+    // 'n' is the size of the array
+    d = d % n; // ensures 'd' is not greater than 'n'
+    int temp[d]; // creates a temporary array to store the first 'd' elements
     for (int i = 0; i < d; i++) {
-        temp[i] = a[i];
+        temp[i] = a[i]; // copies the first 'd' elements into the temporary array
     }
     for (int i = d; i < n; i++) {
-        a[i - d] = a[i];
+        a[i - d] = a[i]; // shifts the remaining elements to the left by 'd' places
     }
     for (int i = n - d; i < n; i++) {
-        a[i] = temp[i - (n - d)];
+        a[i] = temp[i - (n - d)]; // copies the elements from the temporary array back to the end of the original array
     }
-    delete[] temp;
 }
 int main(){
-    int n; cin>> n;
-    int* a = new int[n];
+    int n; 
+    cin>> n; // reads the size of the array
+    int a[n];
     for ( int i=0; i<n; i++){
-        cin>> a[i];
+        cin>> a[i]; // reads the elements of the array
     }
-    int d; cin>> d;
-    leftrotate(a, n, d);
+    int d; 
+    cin>> d; // reads the number of places to rotate
+    leftrotate(a, n, d); 
     for ( int i=0; i<n; i++){
-        cout<< a[i]<<" ";
+        cout<< a[i]<<" "; // prints the rotated array
     }
-    delete[] a;
+    
     return 0;
 }
