@@ -33,3 +33,29 @@ int main(){
     
     return 0;
 }
+
+
+// optimal approach:-
+#include <iostream>
+using namespace std;
+void leftrotate( int a[], int n, int d){
+    reverse( a, a+d);       // reverses the first 'd' elements
+    reverse( a+d, a+n);     // reverses the remaining 'n-d' elements
+    reverse( a, a+n);       // reverses the entire array to get the final rotated array
+}
+int main(){
+    int n; 
+    cin>> n; // reads the size of the array
+    int a[n];
+    for ( int i=0; i<n; i++){
+        cin>> a[i]; // reads the elements of the array
+    }
+    int d; 
+    cin>> d; // reads the number of places to rotate
+    leftrotate(a, n, d); 
+    for ( int i=0; i<n; i++){
+        cout<< a[i]<<" "; // prints the rotated array
+    }
+    
+    return 0;
+}
