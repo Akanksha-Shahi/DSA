@@ -1,4 +1,5 @@
 // Left rotate an array by d places
+// brute force approach 
 #include <iostream>
 using namespace std;
 void leftrotate( int a[], int n, int d){
