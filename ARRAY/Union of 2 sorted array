@@ -1,0 +1,30 @@
+// Union of two sorted arrays
+#include <iostream>
+#include <vector>
+#include <set>
+using namespace std;
+vector<int> sortedArray(vector <int> a, vector <int> b){
+    int n1= a.size();
+    int n2= b.size();
+    set <int> st;
+    for ( int i=0; i<n1; i++){
+        st.insert(a[i]); // inserts elements of the first array into the set
+    }
+    for ( int i=0; i<n2; i++){
+        st.insert(b[i]); // inserts elements of the second array into the set
+    }
+    vector<int> temp;
+    for ( auto it: st){
+        temp.push_back(it); // copies the elements from the set to the result vector
+    }
+    return temp; // returns the result vector
+}
+int main(){
+    vector<int> a = {1, 2, 3, 4, 5};
+    vector<int> b = {2, 3, 5, 6, 7};
+    vector<int> result = sortedArray(a, b);
+    for ( int i=0; i<result.size(); i++){
+        cout<< result[i]<<" "; // prints the union of the two arrays
+    }
+    return 0;
+}
