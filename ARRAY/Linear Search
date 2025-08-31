@@ -1,0 +1,29 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+int linearSearch (int n, int num, vector<int> a){{
+    for (int i =0; i< num; i++){
+        if( a[i] == n){
+            return i; // returns the index if the element is found
+        }
+    }
+    return -1; // returns -1 if the element is not found
+}}
+int main(){
+    int num; 
+    cin>> num; // reads the size of the array
+    vector<int> a(num);
+    for ( int i=0; i<num; i++){
+        cin>> a[i]; // reads the elements of the array
+    }
+    int n;
+    cin>> n; // reads the element to be searched
+    int result = linearSearch(n, num, a);
+    if ( result != -1){
+        cout<< "Element found at index: "<< result<< endl; // prints the index if found
+    }
+    else{
+        cout<< "Element not found"<< endl; // prints if not found
+    }
+    return 0;
+}
