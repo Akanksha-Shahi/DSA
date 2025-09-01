@@ -28,3 +28,32 @@ int main(){
     cout<<"the missing number is: "<< missingNumber<< endl;
     return 0;
 }    
+
+
+// better solution:- here we will use HASHING
+#include <iostream>
+#include<vector>
+using namespace std;
+int findMissingNumber(int arr[], int n) {
+    int hash[n+1] = {0}; // creates a hash array of size n+1 initialized to 0
+    for ( int i=0; i<n-1; i++){
+        hash[arr[i]] = 1; // marks the presence of elements in the hash array
+    }
+    for( int i=1; i<=n; i++){
+        if ( hash[i] == 0){
+            return i; // returns the missing number
+        }}}
+int main(){
+    int n;
+    cout<<"enter the size of the array: ";
+    cin>> n; // reads the size of the array
+    int arr[n-1];               // array of size n-1
+    cout<<"enter the elements of the array: ";  
+    for ( int i=0; i<n-1; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    int missingNumber = findMissingNumber(arr, n);
+    cout<<"the missing number is: "<< missingNumber<< endl;
+    return 0;
+}        
+
