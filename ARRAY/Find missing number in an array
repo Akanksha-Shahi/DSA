@@ -1,0 +1,30 @@
+// brute force solution:- here we will use Linear Search to search for a given number
+#include <iostream>
+#include<vector>
+using namespace std;
+int findMissingNumber(int arr[], int n) {
+    for (int i = 1; i <= n; i++) {
+        bool found = false;
+        for (int j = 0; j < n - 1; j++) {
+            if (arr[j] == i) {
+                found = true;
+                break; // breaks the inner loop if the number is found
+            }
+        }
+        if (found == 0) {
+            return i; // returns the missing number
+        }
+    }}
+int main(){
+    int n;
+    cout<<"enter the size of the array: ";
+    cin>> n; // reads the size of the array
+    int arr[n-1];               // array of size n-1
+    cout<<"enter the elements of the array: ";
+    for ( int i=0; i<n-1; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    int missingNumber = findMissingNumber(arr, n);
+    cout<<"the missing number is: "<< missingNumber<< endl;
+    return 0;
+}    
