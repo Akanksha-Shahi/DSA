@@ -1,0 +1,70 @@
+// Intersection of two sorted arrays
+// brute force approach
+#include <iostream>
+#include <vector>
+using namespace std;
+vector <int> findArrayIntersection(vector <int> &A,int n, vector <int> &B, int m){
+    vector<int> ans;
+    int vis[m] = {0}; // creates a visited array to track elements in B 
+    for ( int i=0; i<n; i++){
+        for ( int j=0; j<m; j++){
+            if ( A[i] == B[j] && vis[j] == 0){ // checks for common elements and if not already visited
+                ans.push_back(A[i]); // adds the common element to the result
+                vis[j] = 1; // marks the element in B as visited
+                break; // breaks to avoid adding duplicates from A
+            }
+            if ( B[j] > A[i]){ // optimization to break early if B[j] exceeds A[i]
+                break;
+            }
+        }
+    }
+    return ans; // returns the result vector   
+}
+int main(){
+    vector<int> a = {1, 2, 2, 3, 4, 5};
+    vector<int> b = {2, 2, 3, 5, 6, 7};
+    int n = a.size();
+    int m = b.size();
+    vector<int> result = findArrayIntersection(a, n, b, m);
+    for ( int i=0; i<result.size(); i++){
+        cout<< result[i]<<" "; // prints the intersection of the two arrays
+    }
+    cout<< endl;
+    return 0;
+}
+
+
+// optimal approach
+#include<iostream>
+#include<vector>
+using namespace std;
+vector<int> findArrayIntersection(vector<int>& A, int n, vector<int>& B, int m) {
+    int i = 0; int j = 0;
+    vector<int> ans;
+    while ( i<n && j<m){         
+        if( A[i] < B[j]){
+            i++; // move pointer in A if A[i] is smaller
+        }
+        else if(B[j] < A[i]){
+            j++; // move pointer in B if B[j] is smaller
+        }
+        else{
+            ans.push_back(A[i]); // add common element to result
+            i++; 
+            j++; // move both pointers forward
+        }
+    }
+    return ans; // returns the result vector
+}
+int main(){
+    vector<int> a = {1, 2, 2, 3, 4, 5};
+    vector<int> b = {2, 2, 3, 5, 6, 7};
+    int n = a.size();
+    int m = b.size();
+    vector<int> result = findArrayIntersection(a, n, b, m);
+    for ( int i=0; i<result.size(); i++){
+        cout<< result[i]<<" "; // prints the intersection of the two arrays
+    }
+    cout<< endl;
+    return 0;
+}
