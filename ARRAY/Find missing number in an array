@@ -57,3 +57,56 @@ int main(){
     return 0;
 }        
 
+
+// optimal solution (1):- here we will use the formula of sum of first n natural numbers
+#include <iostream>
+using namespace std;
+int findMissingNumber(int arr[], int n) {
+    int sum = n*(n+1)/2;
+    int S2 = 0;
+    for( int i=0; i<n-1; i++){
+        S2 += arr[i]; // calculates the sum of elements in the array
+    }
+    return sum - S2; // returns the missing number
+}
+int main(){
+    int n;
+    cout<<"enter the size of the array: ";
+    cin>> n;
+    int arr[n-1];               // array of size n-1
+    cout<<"enter the elements of the array: ";
+    for ( int i=0; i<n-1; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    int missingNumber = findMissingNumber(arr, n);
+    cout<<"the missing number is: "<< missingNumber<< endl;
+    return 0;
+}
+
+// optimal solution (2):- here we will use XOR operation
+#include <iostream>
+#include<vector>
+using namespace std;
+int missingNumber( vector<int> &a, int N){
+    int xor1 =0, xor2 =0;
+    int n = N-1;
+    for ( int i = 0; i<n; i++){
+        xor2 = xor2 ^ a[i]; // XOR of all elements in the array
+        xor1 = xor1 ^ (i+1); // XOR of all numbers from 1 to N
+    }
+    xor1 = xor1 ^ N; // XOR with N to include the last number
+    return xor1 ^ xor2; // returns the missing number
+}
+int main(){
+    int n;
+    cout<<"enter the size of the array: ";
+    cin>> n;
+    vector<int> a(n-1);
+    cout<<"enter the elements of the array: ";
+    for ( int i=0; i<n-1; i++){
+        cin>> a[i]; // reads the elements of the array
+    }
+    int missingNum = missingNumber(a, n);
+    cout<<"the missing number is: "<< missingNum<< endl;
+    return 0;
+}
