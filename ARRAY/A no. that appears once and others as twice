@@ -26,3 +26,62 @@ int main(){
     int uniqueNumber = findUniqueNumber(arr);
     cout<<" the unique number is: "<< uniqueNumber<< endl;
     return 0;}
+
+
+// better solution: will use hashing
+#include <iostream>
+using namespace std;
+#include<vector>
+int findUniqueNumber(vector<int> &arr) {
+    int maxi = arr[0];
+    for (int i = 1; i < arr.size(); i++) {
+        if (arr[i] > maxi) maxi = arr[i]; // finds the maximum element in the array
+    }
+    vector<int> hash(maxi + 1, 0); // creates a hash array of size maxi+1 initialized to 0
+    for (int i = 0; i < arr.size(); i++) {
+        hash[arr[i]]++; // increments the count of each element in the hash array
+    }
+    for (int i = 0; i < arr.size(); i++) {
+        if (hash[arr[i]] == 1) {
+            return arr[i]; // returns the unique number
+        }
+    }
+    return -1; // in case no unique number is found
+}
+int main(){
+    int n ;
+    cout << " enter the size of the array:";
+    cin>> n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array:";
+    for ( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    int uniqueNumber = findUniqueNumber(arr);
+    cout<<" the unique number is: "<< uniqueNumber<< endl;
+    return 0;}
+
+
+// optimal solution: will use XOR operation
+#include<iostream>
+#include<vector>
+using namespace std;
+int findUniqueNumber(vector<int> &arr){
+    int xor1=0;
+    for ( int i=0; i< arr.size(); i++){
+        xor1 = xor1 ^ arr[i]; // XOR of all elements in the array
+    }
+    return xor1; // returns the unique number
+}
+int main(){
+    int n ;
+    cout << " enter the size of the array:";
+    cin>> n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array:";
+    for ( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    int uniqueNumber = findUniqueNumber(arr);
+    cout<<" the unique number is: "<< uniqueNumber<< endl;
+    return 0;}
