@@ -30,3 +30,86 @@ int main(){
     cout<<" the length of the longest subarray with sum k is: "<< result<< endl;
     return 0;
 }
+
+
+// better solution: will use prefix sum and hashing(for positive numbers only)
+#include <iostream>
+#include<vector>
+#include<map>
+using namespace std;
+int longestSubarray( vector<int> a, long long k){
+    map<long long, int> preSumMap; // map to store prefix sums and their first occurrence index
+    long long sum = 0; // variable to store the current prefix sum
+    int maxLen = 0; // variable to store the length of the longest subarray with sum k
+    for ( int i=0; i<a.size(); i++){
+        sum += a[i]; // updates the current prefix sum
+        if ( sum == k){
+            maxLen = max(maxLen, i + 1); // updates maxLen if the current prefix sum equals k
+        }
+        int rem = sum - k;
+        if ( preSumMap.find(rem) != preSumMap.end()){
+            int len = i - preSumMap[rem]; // calculates the length of the subarray with sum k
+            maxLen = max(maxLen, len); // updates maxLen if needed
+        }
+        preSumMap[sum] = i; // stores the first occurrence index of the current prefix sum
+    }
+    return maxLen; // returns the length of the longest subarray with sum k
+}
+int main(){
+    int n;
+    long long k;
+    cout<<" enter the size of the array:";
+    cin>> n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array:";
+    for ( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    cout<<" enter the value of k:";
+    cin>> k; // reads the value of k
+    int result = longestSubarray(arr, k);
+    cout<<" the length of the longest subarray with sum k is: "<< result<< endl;
+    return 0;
+}
+
+
+// better solution: will use prefix sum and hashing(for 0 as well as negative numbers)
+#include <iostream>
+#include<vector>
+#include<map>
+using namespace std;
+int longestSubarray( vector<int> a, long long k){
+    map<long long, int> preSumMap; // map to store prefix sums and their first occurrence index
+    long long sum = 0; // variable to store the current prefix sum
+    int maxLen = 0; // variable to store the length of the longest subarray with sum k
+    for ( int i=0; i<a.size(); i++){
+        sum += a[i]; // updates the current prefix sum
+        if ( sum == k){
+            maxLen = max(maxLen, i + 1); // updates maxLen if the current prefix sum equals k
+        }
+        long long  rem = sum - k;
+        if ( preSumMap.find(rem) != preSumMap.end()){
+            int len = i - preSumMap[rem]; // calculates the length of the subarray with sum k
+            maxLen = max(maxLen, len); // updates maxLen if needed
+        }
+        if (preSumMap.find(sum) == preSumMap.end()) // stores the first occurrence index of the current prefix sum
+            preSumMap[sum] = i;
+    }
+    return maxLen; // returns the length of the longest subarray with sum k
+}
+int main(){
+    int n;
+    long long k;
+    cout<<" enter the size of the array:";
+    cin>> n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array:";
+    for ( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    cout<<" enter the value of k:";
+    cin>> k; // reads the value of k
+    int result = longestSubarray(arr, k);
+    cout<<" the length of the longest subarray with sum k is: "<< result<< endl;
+    return 0;
+}
