@@ -1,0 +1,28 @@
+// brute force: will treverse and look how many times a number appears
+#include <iostream>
+#include<vector>
+using namespace std;
+int findUniqueNumber(vector<int> &arr) {
+    for ( int i=0; i<arr.size(); i++){
+        int num = arr[i];
+        int count = 0;
+        for ( int j=0; j<arr.size(); j++){
+            if ( arr[j] == num){
+                count++; // counts how many times the number appears
+            }
+        }
+        if ( count == 1){
+            return num; // returns the unique number
+        }}}
+int main(){
+    int n ;
+    cout << " enter the size of the array:";
+    cin>> n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array:";
+    for ( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    int uniqueNumber = findUniqueNumber(arr);
+    cout<<" the unique number is: "<< uniqueNumber<< endl;
+    return 0;}
