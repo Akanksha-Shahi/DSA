@@ -67,3 +67,44 @@ int main(){
     cout<< result<< endl; // prints the result
     return 0;
 }
+
+
+
+// better solution (2):
+#include<iostream>
+#include<vector>
+#include<map>
+#include<algorithm>
+using namespace std;
+vector<int> twoSum(vector<int> & nums, int target){
+    map<int, int> mpp;
+    int n = nums.size();
+    for ( int i=0; i<n; i++){
+        int num= nums[i];
+        int moreNeeded= target- num;
+        if ( mpp.find(moreNeeded) != mpp.end()){
+            return {mpp[moreNeeded], i}; // returns the indices of the two elements that sum up to the target
+        }
+        mpp[num] = i; // stores the index of the current element in the map
+    }
+    return {}; // returns an empty vector if no such pair is found
+}
+int main(){
+    int n, target;
+    cout<<" enter the size of the array:";
+    cin>> n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array:";
+    for ( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    cout<<" enter the target sum:";
+    cin>> target; // reads the target sum
+    vector<int> result = twoSum(arr, target);
+    if (result.size() == 2) {
+        cout << "indices of the two elements that sum up to the target are: " << result[0] << " and " << result[1] << endl;
+    } else {
+        cout << "no such pair found" << endl;
+    }
+    return 0;
+}
