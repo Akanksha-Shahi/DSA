@@ -28,3 +28,38 @@ int main(){
     majorityEle(arr, n);
     return 0;
 }
+
+
+// better solution: will use hashing
+#include<iostream>
+#include <map>
+#include<vector>
+using namespace std;
+int majorityElement( vector<int> &arr, int n){
+    map<int, int> mpp;
+    for ( int i=0; i<n; i++){
+        mpp[arr[i]]++; // counts the occurrences of arr[i]
+    for (auto it: mpp){    
+        if ( it.second > n/2 ){
+            return it.first; // returns the majority element if found
+        }
+    }
+    return -1; // returns -1 if no majority element is found
+}}
+int main(){
+    int n;
+    cout<<" enter the size of the array:";
+    cin>>n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array:";
+    for( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    int result = majorityElement(arr, n);
+    if ( result != -1 ){
+        cout<< result<< " is the majority element"<< endl; // prints the majority element
+    } else {
+        cout<<" no majority element found"<< endl;
+    }
+    return 0;
+}
