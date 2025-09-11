@@ -70,3 +70,56 @@ int main(){
     }
     return 0;
 }
+
+
+// Variety (2): when pos!=neg elements
+#include<iostream>
+#include<vector>
+using namespace std;
+void rearrangeArray (vector<int> &arr, int n){
+    vector<int> pos, neg;
+    int n = arr.size();
+    for(int i =0; i<n; i++){
+        if ( arr[i] > 0 ){
+            pos.push_back(arr[i]); // collects positive numbers
+        } else {
+            neg.push_back(arr[i]); // collects negative numbers
+        }
+    }
+    if ( pos.size() > neg.size() ){
+        for ( int i=0; i<neg.size(); i++){
+            arr[2*i] = pos[i]; // places positive numbers at even indices
+            arr[2*i + 1] = neg[i]; // places negative numbers at odd indices
+        }
+        int index = 2 * neg.size();
+        for ( int i= neg.size(); i<pos.size(); i++){
+            arr[index] = pos[i]; // places remaining positive numbers
+            index++;
+        }}
+    else{
+        for ( int i=0; i<pos.size(); i++){
+            arr[2*i] = pos[i]; // places positive numbers at even indices
+            arr[2*i + 1] = neg[i]; // places negative numbers at odd indices
+        }
+        int index = 2 * pos.size();
+        for ( int i= pos.size(); i<neg.size(); i++){
+            arr[index] = neg[i]; // places remaining negative numbers
+            index++;
+        }
+    }  
+}
+int main(){
+    int n; 
+    cout<<" enter the size of the array:";
+    cin>>n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array:";
+    for( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    rearrangeArray(arr, n);
+    cout<<" rearranged array is: ";
+    for ( int i=0; i<n; i++){
+        cout<< arr[i]<< " "; // prints the rearranged array
+    }
+    return 0;} 
