@@ -33,3 +33,40 @@ int main(){
     }
     return 0;
 }
+
+
+// optimal solution:
+#include<iostream>
+#include<vector>
+using namespace std;
+void rearrangeArray (vector<int> &arr, int n){
+    n= arr.size();
+    vector<int> ans (n,0);
+    int posIndex = 0, negIndex = 1; // initialize indices for positive
+    for (int i=0; i<n; i++){
+        if ( arr[i] >= 0 ){
+            ans[posIndex] = arr[i]; // places positive numbers at even indices
+            posIndex += 2;
+        } else {
+            ans[negIndex] = arr[i]; // places negative numbers at odd indices
+            negIndex += 2;
+        }
+    }
+    arr = ans; // copy the rearranged array back to original array
+}
+int main(){
+    int n;
+    cout << " enter the size of the array (even number):";
+    cin>>n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array (equal number of positive and negative):";
+    for( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    rearrangeArray(arr, n);
+    cout<<" rearranged array is: ";
+    for ( int i=0; i<n; i++){
+        cout<< arr[i]<< " "; // prints the rearranged array
+    }
+    return 0;
+}
