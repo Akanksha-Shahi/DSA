@@ -1,0 +1,41 @@
+#include<iostream>
+#include<vector>  
+#include<algorithm>
+using namespace std;
+void nextPermutation( vector<int> &A){
+    int ind = -1;
+    int n = A.size();
+    for( int i = n-2; i>=0;i--){
+        if ( A[i] < A[i+1]){
+            ind = i; // finds the first decreasing element from the end
+            break;
+        }
+    }
+    if ( ind == -1 ){
+        reverse( A.begin(), A.end() ); // if no such element, reverse the array
+        return;
+    }
+    for ( int i=n-1; i>ind; i--){
+        if ( A[i] > A[ind]){
+            swap( A[i], A[ind]); // swaps the found element with the next larger element
+            break;
+        }
+        reverse( A.begin()+ind+1, A.end() ); // reverses the elements after the found index
+        return;
+    }}
+int main(){
+    int n;
+    cout<<" enter the size of the array:";
+    cin>>n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array:";
+    for( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    nextPermutation(arr);
+    cout<<" next permutation is: ";
+    for ( int i=0; i<n; i++){
+        cout<< arr[i]<< " "; // prints the next permutation
+    }
+    return 0;
+}
