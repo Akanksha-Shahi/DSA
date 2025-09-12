@@ -1,0 +1,37 @@
+// Longest consecutive sequence
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+using namespace std;
+int lonConSequence(vector<int> &arr, int n){
+    unordered_set<int> s;
+    for( int num: arr){
+        s.insert(num); // inserts all elements into the set
+    }
+    int longest= 0;
+    for (int num: arr){
+        if ( s.find(num - 1) == s.end()){ // checks if it's the start of a sequence
+            int currentNum = num;
+            int currentStreak = 1;
+            while ( s.find(currentNum + 1) != s.end()){ // counts the length of the sequence
+                currentNum += 1;
+                currentStreak += 1;
+            }
+            longest = max(longest, currentStreak); // updates the longest length found
+        }
+    }
+    return longest;
+}
+int main(){
+    int n;
+    cout<<" enter the size of the array:";
+    cin>>n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array:";
+    for( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    int length = lonConSequence(arr, n);
+    cout<<" length of longest consecutive sequence is: "<< length;
+    return 0;
+}
