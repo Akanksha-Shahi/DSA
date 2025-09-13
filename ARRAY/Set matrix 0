@@ -1,0 +1,62 @@
+// brute: iterate over the matrix and search for 0 then in the respective columns and rows make all other elements as -1 and later mark them as 0.
+#include<iostream>
+#include<vector>
+using namespace std;
+void markRow(int row, vector<vector<int>>& matrix) {
+    int m = matrix[0].size();
+    for (int j = 0; j < m; j++) {
+        if (matrix[row][j] != 0) { // don't change the 0s to -1
+            matrix[row][j] = -1; // mark the entire row as -1
+        }
+    }
+}
+
+void markCol(int col, vector<vector<int>>& matrix) {
+    int n = matrix.size();
+    for (int i = 0; i < n; i++) {
+        if (matrix[i][col] != 0) { // don't change the 0s to -1
+            matrix[i][col] = -1; // mark the entire column as -1
+        }
+    }
+}
+
+void setZeroes(vector<vector<int>>& matrix) {
+    int n = matrix.size();
+    int m = matrix[0].size();
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (matrix[i][j] == 0) {
+                markRow(i, matrix);
+                markCol(j, matrix);
+            }
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (matrix[i][j] == -1) { // convert all -1 to 0
+                matrix[i][j] = 0;
+            }
+        }
+    }
+}
+int man(){
+    int n, m;
+    cout << "Enter the number of rows and columns of the matrix: ";
+    cin >> n >> m;
+    vector<vector<int>> matrix(n, vector<int>(m));
+    cout << "Enter the elements of the matrix: ";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cin >> matrix[i][j];
+        }
+    }
+    setZeroes(matrix);
+    cout << "Matrix after setting zeroes: " << endl;
+    for (const auto& row : matrix) {
+        for (const auto& elem : row) {
+            cout << elem << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
