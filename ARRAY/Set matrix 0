@@ -60,3 +60,52 @@ int man(){
     }
     return 0;
 }
+
+
+
+// better: iterate to search for 0 and then mark 1 in the column and row as 0 and at last reiterate
+#include <iostream>
+#include <vector>
+using namespace std;
+void setZeroes(vector<vector<int>>& matrix) {
+    int n = matrix.size();
+    int m = matrix[0].size();
+    vector<int> row(n, 1); // to mark the rows
+    vector<int> col(m, 1); // to mark the columns
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (matrix[i][j] == 0) {
+                row[i] = 0; // mark the row
+                col[j] = 0; // mark the column
+            }
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (row[i] == 0 || col[j] == 0) { // if either the row or column is marked, set the element to 0
+                matrix[i][j] = 0;
+            }
+        }
+    }
+}
+int main() {
+    int n, m;
+    cout << "Enter the number of rows and columns of the matrix: ";
+    cin >> n >> m;
+    vector<vector<int>> matrix(n, vector<int>(m));
+    cout << "Enter the elements of the matrix: ";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cin >> matrix[i][j];
+        }
+    }
+    setZeroes(matrix);
+    cout << "Matrix after setting zeroes: " << endl;
+    for (const auto& row : matrix) {
+        for (const auto& elem : row) {
+            cout << elem << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
