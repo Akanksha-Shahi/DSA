@@ -74,3 +74,44 @@ int main(){
     cout<<" length of longest consecutive sequence is: "<< length;
     return 0;
 }
+
+
+
+// optimal solution: put all the elements in a set data structure and then start iterating element by element
+#include <iostream>
+#include <vector>
+using namespace std;
+#include <unordered_set>
+int lonConSequence(vector<int> &arr, int n ){
+    n = arr.size();
+    if (n ==0) return 0;
+    int longest= 1;
+    unordered_set<int> s;
+    for (int i=0; i<n; i++){            // insert all elements into the set
+        s.insert(arr[i]);
+    }
+    for ( auto it: s){                // iterate through each element in the set
+        if ( s.find(it - 1) == s.end()){ // check if it's the start of a sequence
+            int currentNum = it;
+            int currentStreak = 1;
+            while ( s.find(currentNum + 1) != s.end()){ // count the length of the sequence
+                currentNum += 1;
+                currentStreak += 1;
+            }
+            longest = max(longest, currentStreak); // update the longest length found
+        }
+    }
+}
+int main(){
+    int n;
+    cout<<" enter the size of the array:";
+    cin>>n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array:";
+    for( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    int length = lonConSequence(arr, n);
+    cout<<" length of longest consecutive sequence is: "<< length;
+    return 0;
+}
