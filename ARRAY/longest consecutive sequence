@@ -35,3 +35,42 @@ int main(){
     cout<<" length of longest consecutive sequence is: "<< length;
     return 0;
 }
+
+
+// better solution: first sort the array and then start iterating element by element
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int lonConSequence(vector<int> &arr, int n ){
+    n = arr.size();
+    if (n ==0) return 0;
+    sort(arr.begin(), arr.end()); // sort the array
+    int longest= 1;
+    int last_smaller= INT16_MIN; // to handle duplicates
+    int currentStreak = 1;
+    for (int i=1; i<n; i++){
+        if( arr[i]-1== last_smaller){ // checks if the current element is consecutive to the last smaller element
+            currentStreak += 1;
+            last_smaller = arr[i];
+        }
+        else if ( arr[i] != last_smaller){ // handles duplicates
+            currentStreak = 1;
+            last_smaller = arr[i];
+        }
+    longest = max(longest, currentStreak); // final update in case the longest sequence ends at the last element
+    return longest;
+}}
+int main(){
+    int n;
+    cout<<" enter the size of the array:";
+    cin>>n;
+    vector<int> arr(n);
+    cout<<" enter the elements of the array:";
+    for( int i=0; i<n; i++){
+        cin>> arr[i]; // reads the elements of the array
+    }
+    int length = lonConSequence(arr, n);
+    cout<<" length of longest consecutive sequence is: "<< length;
+    return 0;
+}
