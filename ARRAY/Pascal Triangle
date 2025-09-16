@@ -62,3 +62,40 @@ int main(){
     pascalTriangle(n);
     return 0;
 }
+
+
+
+// ques 3: print the entire triangle for given N
+#include<iostream>
+#include<vector>
+using namespace std;
+vector<int> generateRow( int row){
+    long long ans = 1;
+    vector<int> ansRow;
+    ansRow.push_back(ans);
+    for(int col=1; col<row; col++){
+        ans= ans * (row-col)/col;
+        ansRow.push_back(ans);
+    }
+    return ansRow;
+}
+vector<vector<int>> pascalTrle(int N){
+    vector<vector<int>> ans;
+    for(int i=1; i<=N; i++){
+        ans.push_back(generateRow(i));
+    }
+    return ans;
+}
+int main(){
+    int n;
+    cout<<"Enter the number of rows: ";
+    cin>>n;
+    vector<vector<int>> ans = pascalTrle(n);
+    for (const auto& row : ans) {
+        for (const auto& elem : row) {
+            cout << elem << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
