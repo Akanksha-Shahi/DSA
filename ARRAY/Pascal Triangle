@@ -41,3 +41,24 @@ int main() {
     cin >> n;
     funcNcR(n);
     return 0;}
+
+
+// optimal:
+#include<iostream>
+#include<vector>
+using namespace std;
+vector<int> pascalTriangle(int n){
+    int ans = 1;
+    cout<<ans<<" ";
+    for(int i=1;i<=n;i++){
+        ans= ans * (n-i);
+        ans= ans/i;
+        cout<<ans<<" ";
+}    }
+int main(){
+    int n;
+    cout<<"Enter the row number (0-indexed): ";
+    cin>>n;
+    pascalTriangle(n);
+    return 0;
+}
