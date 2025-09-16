@@ -18,3 +18,26 @@ int main() {
     funcNcR(n, r);
     return 0;
 }
+
+
+// ques 2: Print any Nth row of pascal trinagle
+// brute: will use NCR formula to find the element at that place
+#include <iostream> 
+#include <vector>
+using namespace std;
+void funcNcR( int n){
+    long long res = 1;
+    cout << res << " "; // Print nC0, which is always 1
+        for (int c = 1; c <= n; c++) {
+            res = res * (n - c + 1);
+            res = res / c;
+            cout << res << " ";
+        }
+        cout << endl;
+    }
+int main() {
+    int n;
+    cout << "Enter the row number (0-indexed): ";
+    cin >> n;
+    funcNcR(n);
+    return 0;}
