@@ -82,3 +82,64 @@ int main(){
 }    
   
 
+// optimal: 
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+vector<int> majorityElement(vector<int> v) {
+    int count1 = 0, count2 = 0;
+    int ele1 = INT_MIN, ele2 = INT_MIN;
+
+    // Phase 1: Find potential candidates
+    for (int i =0;i<v.size(); i++){
+        if(count1 == 0 && ele2 != v[i]){
+            count1 = 1;
+            ele1 = v[i];
+        }
+        else if(count2 == 0 && ele1 != v[i]){
+            count2 = 1;
+            ele2 = v[i];
+        }
+        else if(ele1 == v[i]){
+            count1++;
+        }
+        else if(ele2 == v[i]){
+            count2++;
+        }
+        else{
+            count1--;
+            count2--;
+        }
+    }
+    // Phase 2: Verify the candidates
+    vector <int> ls;
+    count1 = 0;
+    count2 = 0;
+    for (int i=0; i<v.size(); i++){
+        if(v[i] == ele1) count1++;
+        else if(v[i] == ele2) count2++;
+    }
+    int mini = (int)(v.size()/3) + 1;
+    if(count1 >= mini) ls.push_back(ele1);
+    if(count2 >= mini) ls.push_back(ele2);
+    sort(ls.begin(), ls.end());
+    return ls;}
+int main(){
+    int n;
+    cout<<"Enter the size of the array: ";
+    cin>>n;
+    vector<int> arr(n);
+    cout<<"Enter the elements of the array: ";
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    vector<int> result = majorityElement(arr);
+    cout<<"Elements appearing more than n/3 times are: ";
+    for(int elem : result){
+        cout<<elem<<" ";
+    }
+    cout<<endl;
+    return 0;
+}    
+        
