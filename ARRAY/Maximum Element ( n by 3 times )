@@ -39,3 +39,46 @@ int main() {
     cout << endl;
     return 0;
 }
+
+
+
+// better: usinh hashing ( iterate over the array and add values to hash, as soon as the count == 3 put that element to ans )
+#include <iostream>
+#include <vector>
+#include <map>
+#include <algorithm>
+using namespace std;
+vector<int> majorityElement( vector<int> v){
+    vector<int> ls;
+    map<int, int> mpp;
+    int n = v.size();
+    int mini =(int) (n/3) +1;
+    for(int i=0; i<n; i++){
+        mpp[v[i]]++;
+        if(mpp[v[i]] == mini){
+            ls.push_back(v[i]);
+        }
+        if( ls.size() == 2) break;
+    }
+    sort(ls.begin(), ls.end());
+    return ls;
+    }
+int main(){
+    int n;
+    cout<<"Enter the size of the array: ";
+    cin>>n;
+    vector<int> arr(n);
+    cout<<"Enter the elements of the array: ";
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    vector<int> result = majorityElement(arr);
+    cout<<"Elements appearing more than n/3 times are: ";
+    for(int elem : result){
+        cout<<elem<<" ";
+    }
+    cout<<endl;
+    return 0;
+}    
+  
+
