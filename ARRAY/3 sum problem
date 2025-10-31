@@ -87,3 +87,58 @@ int main(){
     }
     return 0;
 }
+
+
+// optimal : two pointer appraoch
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<set>
+using namespace std;
+vector <vector<int>> triplet(int n, vector<int> &num){
+    vector<vector<int>> ans;
+    sort(num.begin(),num.end());
+    for(int i=0;i<n;i++){
+        if(i>0 && num[i]==num[i-1]) continue; // skip duplicates
+        int j = i+1;
+        int k = n-1;
+        while(j<k){
+            int sum = num[i]+num[j]+num[k];
+            if(sum<0){
+                j++;
+            }
+            else if(sum>0){
+                k--;
+            }
+            else{
+                vector<int> temp = {num[i],num[j],num[k]};
+                ans.push_back(temp);
+                j++;
+                k--;
+                while(j<k && num[j]==num[j-1]) j++; // skip duplicates
+                while(j<k && num[k]==num[k+1]) k--; // skip duplicates
+                
+            }
+        }
+    }
+    return ans;
+}
+int main(){
+    int n;
+    cout<<"Enter the size of array: ";
+    cin>>n;
+    vector<int> num(n);
+    cout<<"Enter the elements of array: ";
+    for(int i=0;i<n;i++){
+        cin>>num[i];
+    }
+    vector<vector<int>> result = triplet(n,num);
+    cout<<"The unique triplets that sum to zero are: "<<endl;
+    for(auto triplet : result){
+        for(auto val : triplet){
+            cout<<val<<" ";
+        }
+        cout<<endl;
+    }
+    return 0;
+}
