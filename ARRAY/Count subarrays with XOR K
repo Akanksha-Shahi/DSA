@@ -88,3 +88,42 @@ int main(){
     }
     return 0;
 }
+
+
+// optimal: O(n) approach
+#include <iostream>
+#include <vector>
+#include <map>
+using namespace std;
+vector<vector<int>> subarray(vector<int> &arr, int k){
+    int n = arr.size();
+    vector<vector<int>> ans;
+    int xr= 0;
+    map<int, int> mpp;
+    mpp[xr]++;
+    int count=0;
+    for(int i=0;i<n;i++){
+        xr ^= arr[i];
+        int required_xor = xr ^ k;
+        count += mpp[required_xor];
+        mpp[xr]++;
+    }
+     return count;
+    }
+int main(){
+    int n;
+    cout<<"Enter the size of array: ";
+    cin>>n;
+    vector<int> arr(n);
+    cout<<"Enter the elements of array: ";
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    int k;
+    cout<<"Enter the target XOR value: ";
+    cin>>k;
+    int result = subarray(arr,k);
+    cout<<"The count of subarrays with XOR "<<k<<" is: "<<result<<endl;
+    return 0;
+}
+
