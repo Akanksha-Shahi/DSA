@@ -112,3 +112,70 @@ int main(){
     cout << endl;
     return 0;
 }
+
+
+// optimal2 : gap method
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+void swap( long long arr1[], long long arr2[], int ind1, int ind2){
+    if (arr1[ind1]> arr2[ind2]){
+        swap(arr1[ind1], arr2[ind2]);
+    }
+}
+void merge( long long arr1[], long long arr2[], int n , int m){
+    vector<long long> arr3(n + m);
+    int len =n+m;
+    int gap = (len/2) + (len%2);
+    while(gap>0){
+        int left =0;
+        int right = left + gap;
+        while(right < len){
+            // arr1 and arr2
+            if(left< n && right >= n){
+                swap(arr1, arr2, left, right - n);
+            }
+            // arr2 and arr2
+            else if (left>= n){
+                swap(arr2, arr2, left - n, right - n);
+            }
+            // arr1 and arr1
+            else {
+                swap(arr1, arr1, left, right);
+            }
+            left++;
+            right++;}
+        if(gap==1) break;
+        gap = (gap/2) + (gap%2);}}
+int main(){
+    int n, m;
+    cout << "Enter the size of first array: ";
+    cin >> n;
+    vector<long long> arr1(n);
+    cout << "Enter the elements of first array: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr1[i];
+    }
+    cout << "Enter the size of second array: ";
+    cin >> m;
+    vector<long long> arr2(m);
+    cout << "Enter the elements of second array: ";
+    for (int i = 0; i < m; i++) {
+        cin >> arr2[i];
+    }
+    merge(arr1.data(), arr2.data(), n, m);
+    cout << "The merged arrays are: " << endl;
+    cout << "First array: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr1[i] << " ";
+    }
+    cout << endl;
+    cout << "Second array: ";
+    for (int i = 0; i < m; i++) {
+        cout << arr2[i] << " ";
+    }
+    cout << endl;
+    return 0;
+}        
+
