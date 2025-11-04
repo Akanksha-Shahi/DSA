@@ -114,3 +114,71 @@ int main() {
     cout << "Repeating number: " << result[1] << endl;
     return 0;
 }
+
+
+
+// optimal approach 2 -  XOR METHOD
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+vector<int> findMissingAndRepeating( vector<int>& arr) {
+    long long n = arr.size();
+    int xr = 0;
+    for (int i = 0; i < n; i++) {
+        xr ^= arr[i];
+        xr = xr^(i + 1);
+    }
+    int bitNo = 0;
+    while(1){
+        if((xr & (1 << bitNo)) != 0){
+            break;
+        }
+        bitNo++;
+    }
+    int zero = 0, one = 0;
+    for (int i = 0; i < n; i++) {
+        // part of 1 club
+        if((arr[i] & (1 << bitNo)) != 0){
+            one ^= arr[i];
+        }
+        // zero club
+        else {
+            zero ^= arr[i];
+        }
+    for (int i = 1; i <= n; i++) {
+        // part of 1 club
+        if((i & (1 << bitNo)) != 0){
+            one ^= i;
+        }
+        // zero club
+        else {
+            zero ^= i;
+        }
+    }
+    int count=0;
+    for (int i = 0; i < n; i++) {
+        if(arr[i]== one){
+            count++;
+        }
+    }
+    if(count==2){
+        return {(int)zero, (int)one};
+    } else {
+        return {(int)one, (int)zero};
+    }
+}}
+int main(){
+    int n;
+    cout << "Enter the size of the array: ";
+    cin >> n;
+    vector<int> arr(n);
+    cout << "Enter the elements of the array: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    vector<int> result = findMissingAndRepeating(arr);
+    cout << "Missing number: " << result[0] << endl;
+    cout << "Repeating number: " << result[1] << endl;
+    return 0;
+}
