@@ -1,0 +1,94 @@
+// brute force approach
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+long long maxProduct(vector<int>& arr) {
+    int n = arr.size();
+    long long max_product = LLONG_MIN;
+    for (int i = 0; i < n; i++) {
+        for (int j = i; j < n; j++) {
+            long long product = 1;
+            for (int k = i; k <= j; k++) {
+                product *= arr[j];}
+            max_product = max(max_product, product);
+        }
+    }
+    return max_product;
+}
+int main() {
+    int n;
+    cout << "Enter the size of the array: ";
+    cin >> n;
+    vector<int> arr(n);
+    cout << "Enter the elements of the array: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    long long result = maxProduct(arr);
+    cout << "Maximum product subarray: " << result << endl;
+    return 0;
+}
+
+
+
+// better approach
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+long long maxProduct(vector<int>& arr) {
+    int n = arr.size();
+    long long max_product = LLONG_MIN;
+    for (int i = 0; i < n; i++) {
+        long long product = 1;
+        for (int j = i; j < n; j++) {
+            product *= arr[j];}
+            max_product = max(max_product, product);
+        }
+    }
+int main() {
+    int n;
+    cout << "Enter the size of the array: ";
+    cin >> n;
+    vector<int> arr(n);
+    cout << "Enter the elements of the array: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    long long result = maxProduct(arr);
+    cout << "Maximum product subarray: " << result << endl;
+    return 0;
+}
+
+
+// optimal approach
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int subarraywithMaxProduct ( vector<int> &arr){
+    int pre =1, suff = 1;
+    int ans = INT_MIN;
+    int n = arr.size();
+    for ( int i =0; i<n; i++){
+        if ( pre ==0) pre =1;
+        if ( suff ==0) suff =1;
+        pre = pre * arr[i];
+        suff = suff * arr[n -1 -i];
+        ans = max ( ans, max ( pre, suff));
+    }
+}
+int main(){
+    int n;
+    cout << "Enter the size of the array: ";
+    cin >> n;
+    vector<int> arr(n);
+    cout << "Enter the elements of the array: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    int result = subarraywithMaxProduct(arr);
+    cout << "Maximum product subarray: " << result << endl;
+    return 0;
+}
