@@ -1,0 +1,37 @@
+// brute force approach
+#include <iostream>
+#include <vector>
+using namespace std;
+int singleElement(vector<int> & arr, int n){
+    if ( n==1) return arr[0];
+    for ( int i =0; i<n; i++){
+        if ( i==0){
+            if ( arr[i]!= arr[i+1]){
+                return arr[0];
+            }
+        }
+        else if ( i== n-1){
+            if ( arr[i]!= arr[i-1]){
+                return arr[i];
+            }
+        }
+        else {
+            if ( arr[i]!= arr[i-1] && arr[i]!= arr[i+1]){
+                return arr[i];
+            }
+        }
+    }
+}
+int main(){
+    int n;
+    cout<<" Enter the size of the array: ";
+    cin>> n;
+    vector <int> arr(n);
+    cout<<" Enter the elements of the array: ";
+    for ( int i =0; i<n; i++){
+        cin>> arr[i];
+    }
+    int result = singleElement(arr, n);
+    cout<<" The single element in the sorted array is: "<< result << endl;
+    return 0;
+}
