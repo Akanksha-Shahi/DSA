@@ -36,3 +36,59 @@ int main(){
     cout<<" The minimum eating speed is: "<< result << endl;
     return 0;
 }
+
+
+
+// optimal: by binary search
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+int function( vector<int> &piles, int hr){
+    int totalhr = 0;
+    int n = piles.size();
+    for ( int i =0; i<n; i++){
+        totalhr += ceil( (double)piles[i]/ hr);
+    }
+    return totalhr;
+}
+// to finnd range of the for loop i.e. max element
+int findMax( vector<int> &piles){
+    int maxpile= INT16_MIN;
+    int n = piles.size();
+    for ( int i =0; i<n; i++){
+        maxpile=max( maxpile, piles[i]);
+    }
+    return maxpile;
+}
+int minEatspee( vector<int> &piles, int h){
+    int low =1;
+    int high = findMax(piles);
+    int ans = -1;
+    while ( low<= high){
+        int mid = ( low + high)/2;
+        int totalhr = function(piles, mid);
+        if ( totalhr <= h){
+            ans = mid;
+            high = mid -1;
+        }
+        else {
+            low = mid +1;
+        }
+    }
+    return ans;
+}
+int main(){
+    int n, h;
+    cout<<" Enter the number of piles and hours: ";
+    cin>> n >> h;
+    vector <int> piles(n);
+    cout<<" Enter the number of bananas in each pile: ";
+    for ( int i =0; i<n; i++){
+        cin>> piles[i];
+    }
+    int result = minEatspee(piles, h);
+    cout<<" The minimum eating speed is: "<< result << endl;
+    return 0;
+}
