@@ -51,3 +51,65 @@ int main(){
     }
     return 0;
 }
+
+
+// optimal: by binary search
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+bool possible ( vector<int> &arr, int day, int m, int k ){
+    int count =0;
+    int n = arr.size();
+    int noofB=0;
+    for( int i =0;i<n; i++){
+        if ( arr[i]<= day){
+            count++;
+        } 
+        else {
+            noofB += count/k;
+            count =0;
+        }
+        
+    }
+    noofB += count/k;
+    return noofB >= m;
+}
+int roseGarden( vector<int>&arr, int r, int b ){
+    long long val = r* 1LL *b *1LL;
+    if ( val> arr.size()) return -1;
+    int mini = INT_MAX, maxi = INT_MIN;
+    for ( int i =0; i<arr.size(); i++){
+        mini = min( mini, arr[i]);
+        maxi = max( maxi, arr[i]);
+    }
+    int low = mini, high = maxi;
+    while ( low<= high){
+        int mid = ( low + high)/2;
+        if ( possible(arr, mid, r, b)){
+            high = mid -1;
+        }
+        else {
+            low = mid +1;
+        }
+    }
+    return low;
+}
+int main(){
+    int n, m, k;
+    cout<<" Enter the number of flowers, bouquets and flowers per bouquet: ";
+    cin>> n >> m >> k;
+    vector <int> arr(n);
+    cout<<" Enter the bloom days of each flower: ";
+    for ( int i =0; i<n; i++){
+        cin>> arr[i];
+    }
+    int result = roseGarden(arr, m, k);
+    if ( result != -1){
+        cout<<" The minimum number of days to make "<< m <<" bouquets is: "<< result << endl;
+    }
+    else {
+        cout<<" It is not possible to make "<< m <<" bouquets."<< endl;
+    }
+    return 0;
+}
