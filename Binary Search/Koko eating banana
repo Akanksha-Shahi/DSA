@@ -1,0 +1,38 @@
+// KOKO EATING BANANA
+// brute: by linear search 
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+int function( vector<int> &piles, int hr){
+    int totalhr = 0;
+    int n = piles.size();
+    for ( int i =0; i<n; i++){
+        totalhr += ceil( (double)piles[i]/ hr);
+    }
+    return totalhr;
+}
+int minEatspee( vector<int> &piles, int h){
+    int maxpile = *max_element(piles.begin(), piles.end());
+    for ( int speed =1; speed<= maxpile; speed++){
+        int totalhr = function(piles, speed);
+        if ( totalhr <= h){
+            return speed;
+        }
+    }
+    return -1;
+}
+int main(){
+    int n, h;
+    cout<<" Enter the number of piles and hours: ";
+    cin>> n >> h;
+    vector <int> piles(n);
+    cout<<" Enter the number of bananas in each pile: ";
+    for ( int i =0; i<n; i++){
+        cin>> piles[i];
+    }
+    int result = minEatspee(piles, h);
+    cout<<" The minimum eating speed is: "<< result << endl;
+    return 0;
+}
