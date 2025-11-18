@@ -1,0 +1,35 @@
+// smallest divisor given a threshold
+// brute
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+int function( vector<int> &arr, int divisor){
+    if (arr.empty()) return -1;
+    int max_val = *max_element(arr.begin(), arr.end());
+    for ( int d = 1; d<= max_val; d++){
+        int sum =0;
+        int n = arr.size();
+        for ( int i =0; i<n; i++){
+            sum += ceil( (double)arr[i]/ d);
+        }
+        if ( sum <= divisor){
+            return d;
+        }
+    }
+    return -1;
+}
+int main(){
+    int n, threshold;
+    cout<<" Enter the size of the array and threshold: ";
+    cin>> n >> threshold;
+    vector <int> arr(n);
+    cout<<" Enter the elements of the array: ";
+    for ( int i =0; i<n; i++){
+        cin>> arr[i];
+    }
+    int result = function(arr, threshold);
+    cout<<" The smallest divisor is: "<< result << endl;
+    return 0;
+}
