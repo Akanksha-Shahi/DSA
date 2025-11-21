@@ -1,0 +1,27 @@
+// brute
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int missingk(vector<int> &arr, int n, int k){
+    for ( int i =0; i< n; i++){
+        if ( arr[i] <=k){
+            k++;
+        }
+        else {
+            break ;}
+    }
+}
+int main(){
+    int n, k;
+    cout<<" Enter the size of the array and k: ";
+    cin>> n >> k;
+    vector <int> arr(n);
+    cout<<" Enter the elements of the array: ";
+    for ( int i =0; i<n; i++){
+        cin>> arr[i];
+    }
+    int result = missingk(arr, n, k);
+    cout<<" The kth missing positive number is: "<< result << endl;
+    return 0;
+}
