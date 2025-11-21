@@ -1,0 +1,41 @@
+// brute
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int func( vector<int> &arr, int cap){
+    int days =1;
+    int currcap =0;
+    int n = arr.size();
+    for ( int i =0; i<n; i++){
+        if ( currcap + arr[i] <= cap){
+            currcap += arr[i];
+        }
+        else {
+            days++;
+            currcap = arr[i];
+        }
+    }
+    return days;
+}
+int shipWithinDays( vector<int> &arr, int d){
+    for( int capacity = *max_element(arr.begin(), arr.end()); ; capacity++){
+        int days = func(arr, capacity);
+        if ( days <= d){
+            return capacity;
+        }
+    }
+} 
+int main(){
+    int n, d;
+    cout<<" Enter the number of packages and days: ";
+    cin>> n >> d;
+    vector <int> arr(n);
+    cout<<" Enter the weights of the packages: ";
+    for ( int i =0; i<n; i++){
+        cin>> arr[i];
+    }
+    int result = shipWithinDays(arr, d);
+    cout<<" The minimum capacity to ship within "<< d <<" days is: "<< result << endl;
+    return 0;
+}
