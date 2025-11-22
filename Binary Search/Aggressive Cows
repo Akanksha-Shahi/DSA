@@ -1,0 +1,44 @@
+// brute: by linaer search 
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+bool canWePlace( vector<int> &arr, int distance, int cows){
+    int count =1;
+    int last_position = arr[0];
+    int n = arr.size();
+    for ( int i =1; i<n; i++){
+        if ( arr[i] - last_position >= distance){
+            count++;
+            last_position = arr[i];
+        }
+        if ( count >= cows) return true;
+    }
+    return false;
+}
+int aggressiveCows( vector<int> &arr, int cows){
+    sort( arr.begin(), arr.end());
+    int max_distance = arr.back() - arr[0];
+    for ( int d =1; d<= max_distance; d++){
+        if ( canWePlace(arr, d, cows)== true){
+            continue;
+        }
+        else {
+            return d-1;
+        }
+    }
+    return -1;
+}
+int main(){
+    int n, cows;
+    cout<<" Enter the number of stalls and cows: ";
+    cin>> n >> cows;
+    vector <int> arr(n);
+    cout<<" Enter the positions of the stalls: ";
+    for ( int i =0; i<n; i++){
+        cin>> arr[i];
+    }
+    int result = aggressiveCows(arr, cows);
+    cout<<" The largest minimum distance is: "<< result << endl;
+    return 0;
+}
