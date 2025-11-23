@@ -1,0 +1,42 @@
+// brute:
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+long double minMaxDist( vector<int> &arr, int k){
+    int n = arr.size();
+    vector<int> howMany ( n-1, 0);
+    for ( int gasStat= 1; gasStat <= k; gasStat++){
+        long double maxSec =-1;
+        int maxInd =-1;
+        for( int i =0; i<n-1; i++){
+            long double diff =(arr[i+1]- arr[i]);
+            long double sec = diff/(long double)( howMany[i] +1);
+            if ( sec > maxSec){
+                maxSec = sec;
+                maxInd = i;
+            }
+        }
+        howMany[maxInd]++;
+    }
+    long double result =-1;
+    for ( int i =0; i<n-1; i++){
+        long double diff =(arr[i+1]- arr[i]);
+        long double sec = diff/(long double)( howMany[i] +1);
+        result = max( result, sec);
+    }
+    return result;
+}
+int main(){
+    int n, k;
+    cout<<" Enter the number of gas stations and additional gas stations: ";
+    cin>> n >> k;
+    vector <int> arr(n);
+    cout<<" Enter the positions of the gas stations: ";
+    for ( int i =0; i<n; i++){
+        cin>> arr[i];
+    }
+    long double result = minMaxDist(arr, k);
+    cout<<" The minimum possible value of the maximum distance between adjacent gas stations is: "<< result << endl;
+    return 0;
+}
