@@ -40,3 +40,42 @@ int main(){
     cout<<" The minimum possible value of the maximum distance between adjacent gas stations is: "<< result << endl;
     return 0;
 }
+
+// better:
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <queue>
+using namespace std;
+long double minMaxDist( vector<int> &arr, int k){
+    int n = arr.size();
+    vector<int> howmany ( n-1, 0);
+    priority_queue< pair< long double, int> > pq;
+    for ( int i =0; i<n-1; i++){
+        pq.push({arr[i+1]- arr[i], i});
+    }
+    for ( int gasStat= 1; gasStat <= k; gasStat++){
+        auto top = pq.top();
+        pq.pop();
+        int secInd = top.second;
+        howmany[secInd]++;
+        long double diff = (arr[secInd+1]- arr[secInd]);
+        long double newSec = diff/( long double)( howmany[secInd] +1);
+        pq.push({ newSec, secInd});
+    }
+    return pq.top().first;
+}
+int main(){
+    int n, k;
+    cout<<" Enter the number of gas stations and additional gas stations: ";
+    cin>> n >> k;
+    vector <int> arr(n);
+    cout<<" Enter the positions of the gas stations: ";
+    for ( int i =0; i<n; i++){
+        cin>> arr[i];
+    }
+    long double result = minMaxDist(arr, k);
+    cout<<" The minimum possible value of the maximum distance between adjacent gas stations is: "<< result << endl;
+    return 0;
+}
+
