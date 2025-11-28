@@ -1,0 +1,33 @@
+// brute : go through every row and return  the no.of 1s and check for the max no . of 1 and if more than 1 row have same no.of max 1 return the smallest index row
+#include <iostream>
+#include <vector>
+using namespace std;
+int rowWithMax( vector<vector<int>> &arr, int n, int m) {
+    int maxRowIndex = -1;
+    int maxCount = 0;
+
+    for (int i = 0; i < n; i++) {
+        int count = 0;
+        for (int j = 0; j < m; j++) {
+            count += arr[i][j];
+        }
+        if (count > maxCount) {
+            maxCount = count;
+            maxRowIndex = i;
+        }
+    }
+
+    return maxRowIndex;
+}
+int main() {
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> arr(n, vector<int>(m));
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cin >> arr[i][j];
+        }
+    }
+    cout << rowWithMax(arr, n, m) << endl;
+    return 0;
+}
