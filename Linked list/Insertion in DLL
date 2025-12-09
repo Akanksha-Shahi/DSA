@@ -1,0 +1,50 @@
+// Insertion before head of doubly linked list
+Node* insertHeadDLL( Node* head, int val){
+    Node* newNode = new Node( val, head, NULL);
+    if ( head != NULL){
+        head->back = newNode;
+    }
+    return newNode;
+}
+
+// Insertion before the tail of DLL
+Node* insertBeforeLastDLL( Node* head, int val){
+    if ( head->next == NULL) return insertHeadDLL( head, val) ;
+    Node* tail = head;
+    while( tail->next != NULL){         // moving to last node [ tail traversal ]
+        tail = tail->next;
+    }
+    Node* prev = tail->back;
+    Node* newNode = new Node( val, tail, prev);
+    prev->next = newNode;
+    tail->back = newNode;
+    return head;
+}
+
+// Insertion before Kth node
+Node* insertBeforePosDLL( Node* head, int val, int k){
+    if ( k == 1) return insertHeadDLL( head, val);
+    int count =0;
+    Node* temp = head;
+    while( temp!= NULL){
+        count++;
+        if ( count == k){
+            break;
+        }
+        temp = temp->next;
+    }
+    Node* prev = temp->back;
+    Node* newNode = new Node( val, temp, prev);
+    prev->next = newNode;
+    temp->back = newNode;
+    return head;
+}
+
+// Inserting before a given node [ here the node given is never the head of LL { constraint } ]
+Node* insertBeforeValDLL( Node* temp, int val){
+    Node* prev = temp->back;
+    Node* newNode = new Node( val, temp, prev);
+    prev->next = newNode;
+    temp->back = newNode;
+    return;
+}
