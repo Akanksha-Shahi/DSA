@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+class Node {
+    public:
+    int data;
+    Node* next;
+    Node* back;
+
+    public:
+    Node( int data1, Node* next1, Node* back1) {         // constructor
+        data = data1;
+        next = next1;
+        back = back1;
+    }
+
+    public:
+    Node (int data1) {         // constructor
+        data = data1;
+        next = nullptr;
+        back = nullptr;
+    }
+};
+Node* addTwoNumbers( Node* num1, Node* num2){
+    Node* dummyHead = new Node(-1);
+    Node* curr = dummyHead;
+    Node* temp1= num1;
+    Node* temp2= num2;
+    int carry = 0;
+    while( temp1 != NULL || temp2 != NULL){
+        int sum = carry;
+        if ( temp1 != NULL){
+            sum += temp1->data;
+        }
+        if ( temp2 != NULL){
+            sum += temp2->data;
+        }
+        Node* newNode = new Node( sum % 10);
+        carry = sum / 10;
+        curr->next = newNode;
+        curr = curr->next;
+        if ( temp1 != NULL){
+            temp1 = temp1->next;
+        }
+        if ( temp2 != NULL){
+            temp2 = temp2->next;
+        }}
+    if (carry){
+        Node* newNode = new Node(carry);
+        curr->next = newNode;
+    }
+    return dummyHead->next;
+}    
+void print( Node* head){
+    while( head!=NULL ){
+        cout<< head->data<<" ";
+        head = head->next;
+    }
+}
+int main(){
+    Node* num1 = new Node(2);
+    num1->next = new Node(4);
+    num1->next->next = new Node(3);
+
+    Node* num2 = new Node(5);
+    num2->next = new Node(6);
+    num2->next->next = new Node(4);
+
+    Node* result = addTwoNumbers(num1, num2);
+    print(result);
+    return 0;
+}       
