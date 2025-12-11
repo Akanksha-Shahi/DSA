@@ -1,0 +1,47 @@
+// brute force approach: calculate length first
+#include <iostream>
+using namespace std;
+class Node {
+    public:
+    int data;
+    Node* next;
+
+    public:
+    Node( int data1, Node* next1) {         // constructor
+        data = data1;
+        next = next1;
+    }
+
+    public:
+    Node (int data1) {         // constructor
+        data = data1;
+        next = nullptr;
+    }
+};
+Node* removeNthFromEnd( Node* head, int n){
+    if ( head == NULL || head->next == NULL) return NULL;
+    int length = 0;
+    Node* temp = head;
+    while( temp != NULL){
+        length++;
+        temp = temp->next;
+    }
+    if ( n == length){
+        Node* newHead = head->next;
+        head->next = NULL;
+        delete head;
+        return newHead;
+    }
+    int res = length - n;
+    temp = head;
+    while(temp != NULL){
+        res --;
+        if ( res == 0) break;
+        temp = temp->next;
+    }
+    Node* nodeToDelete = temp->next;
+    temp->next = nodeToDelete->next;
+    nodeToDelete->next = NULL;
+    delete nodeToDelete;
+    return head;
+};
