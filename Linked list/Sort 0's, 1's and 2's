@@ -1,0 +1,51 @@
+// brute force approach: by data replacement
+#include <iostream>
+using namespace std;
+class Node{
+    public:
+    int data;
+    Node* next;
+    Node* back;
+
+    public:
+    Node( int data1, Node* next1, Node* back1) {         // constructor
+        data = data1;
+        next = next1;
+        back = back1;
+    }
+
+    public:
+    Node (int data1) {         // constructor
+        data = data1;
+        next = nullptr;
+        back = nullptr;
+    }
+};
+Node* sort012(Node* head){
+    if( head == NULL || head->next == NULL) return head;
+    Node* temp = head;
+    int count0 = 0, count1 = 0, count2 = 0;
+    while( temp != NULL){
+        if ( temp->data == 0) count0++;
+        else if ( temp->data == 1) count1++;
+        else count2++;
+        temp = temp->next;
+    }
+    temp = head;
+    while( temp != NULL){
+        if ( count0 != 0){
+            temp->data = 0;
+            count0--;
+        }
+        else if ( count1 != 0){
+            temp->data = 1;
+            count1--;
+        }
+        else {
+            temp->data = 2;
+            count2--;
+        }
+        temp = temp->next;
+    }   
+    return head;
+}
