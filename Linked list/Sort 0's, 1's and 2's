@@ -49,3 +49,48 @@ Node* sort012(Node* head){
     }   
     return head;
 }
+
+// optimised approach: by changing links only
+Node* sort012Optimised( Node* head){
+    if( head == NULL || head->next == NULL) return head;
+    Node* zeroD = new Node(-1);
+    Node* oneD = new Node(-1);
+    Node* twoD = new Node(-1);
+
+    Node* zero = zeroD;
+    Node* one = oneD;
+    Node* two = twoD;
+
+    Node* curr = head;
+    while( curr != NULL){
+        if ( curr->data == 0){
+            zero->next = curr;
+            zero = curr;
+        }
+        else if ( curr->data == 1){
+            one->next = curr;
+            one = curr;
+        }
+        else {
+            two->next = curr;
+            two = curr;
+        }
+        curr = curr->next;
+    }
+    // merging three sublists
+    zero->next = ( oneD->next ) ? ( oneD->next ) : ( twoD->next );
+    one->next = twoD->next;
+    two->next = NULL;
+
+    head = zeroD->next;
+
+    // free dummy nodes
+    delete zeroD;
+    delete oneD;
+    delete twoD;
+
+    return head;
+}
+int main(){
+    return 0;
+}   
