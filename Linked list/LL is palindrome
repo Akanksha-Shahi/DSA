@@ -1,0 +1,37 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+class Node {
+    public:
+    int data;
+    Node* next;
+
+    public:
+    Node( int data1, Node* next1) {         // constructor
+        data = data1;
+        next = next1;
+    }
+
+    public:
+    Node (int data1) {         // constructor
+        data = data1;
+        next = nullptr;
+    }
+};
+// brute: using stack
+bool isPalindromeBrute( Node* head){
+    if ( head == NULL || head->next == NULL) return true;
+    stack<int> st;
+    Node* temp = head;
+    while( temp != NULL){
+        st.push( temp->data);
+        temp = temp->next;
+    }
+    temp = head;
+    while( temp != NULL){
+        if ( temp->data != st.top()) return false;
+        temp = temp->next;
+        st.pop();
+    }
+    return true;
+};
