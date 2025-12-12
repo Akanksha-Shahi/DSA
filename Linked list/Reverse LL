@@ -51,3 +51,17 @@ Node* reverseLLOptimised( Node* head){
     }
     return prev;
 };
+
+// recursive approach
+Node* reverse( Node*head){
+    if ( head == NULL || head->next == NULL) return head;
+    Node* newHead = reverse( head->next);
+    Node* front = head->next;
+    front->next = NULL;
+    head->next = NULL;
+    return newHead;
+}
+
+int main(){
+    return 0;
+}
