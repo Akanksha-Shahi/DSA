@@ -35,3 +35,43 @@ bool isPalindromeBrute( Node* head){
     }
     return true;
 };
+
+
+// optimised: find mid, reverse second half and compare 
+Node * reverse( Node* head){
+    if ( head == NULL || head->next == NULL) return head;
+    Node* newhead = reverse( head->next);
+    Node* front = head->next;
+    front->next = head;
+    head->next = NULL;
+    return newhead;
+};
+bool isPalindromeOptimised( Node* head){
+    if ( head == NULL || head->next == NULL) return true;
+    // find mid
+    Node* slow = head;
+    Node* fast = head;
+    while( fast != NULL && fast->next != NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    // reverse second half
+    Node* newhead = reverse( slow->next);
+    // compare both halves
+    Node* first = head;
+    Node* second = newhead;
+    while( second != NULL){
+        if ( first->data != second->data){
+            reverse( newhead);
+            return false;
+        }
+        first = first->next;
+        second = second->next;
+    }
+    // optional: reverse second half again to restore original list
+    reverse( newhead);
+    return true;
+};
+int main(){
+    return 0;
+}
