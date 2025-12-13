@@ -1,0 +1,37 @@
+// brute: traverse one LL and store the address in map and then traverse other LL and check if address is present in map
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+class Node {
+    public:
+    int data;
+    Node* next;
+
+    public:
+    Node( int data1, Node* next1) {         // constructor
+        data = data1;
+        next = next1;
+    }
+
+    public:
+    Node (int data1) {         // constructor
+        data = data1;
+        next = nullptr;
+    }
+};
+Node* intersectionPoint( Node* head1, Node* head2){
+    unordered_map<Node*, int> map;
+    Node* temp1 = head1;
+    while( temp1 != NULL){
+        map[temp1] = true;
+        temp1 = temp1->next;
+    }
+    Node* temp2 = head2;
+    while( temp2 != NULL){
+        if ( map.find( temp2) != map.end()){
+            return temp2;
+        }
+        temp2 = temp2->next;
+    }
+    return NULL;
+};
