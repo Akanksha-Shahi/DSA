@@ -35,3 +35,36 @@ Node* intersectionPoint( Node* head1, Node* head2){
     }
     return NULL;
 };
+
+// better: solve during traversal ; no need to store nodes
+Node* interPoint(Node* head1, Node* head2) {
+    Node* t1= head1,*t2 = head2;
+    int n1 = 0, n2 = 0;
+    while( t1 != NULL){
+        n1++;
+        t1 = t1->next;
+    }
+    while( t2 != NULL){
+        n2++;
+        t2 = t2->next;
+    }
+    if( n1 > n2){
+        return collisionPoint( head1, head2, n2 - n1);
+    }
+    else {
+        return collisionPoint( head2, head1, n1 - n2);
+    }
+}
+Node* collisionPoint(Node* t1, Node* t2, int d){
+    while(d){
+        d--;
+        t2= t2->next;
+    }
+    while( t1 != t2){
+        t1 = t1->next;
+        t2 = t2->next;
+    }
+    return t1;
+};
+
+// optimal:
