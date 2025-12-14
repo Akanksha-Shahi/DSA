@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+class Node {
+    public:
+    int data;
+    Node* next;
+
+    public:
+    Node( int data1, Node* next1) {         // constructor
+        data = data1;
+        next = next1;
+    }
+
+    public:
+    Node (int data1) {         // constructor
+        data = data1;
+        next = nullptr;
+    }
+};
+// brute: use map to store address of nodes
+int lengthLoop( Node* head){
+    unordered_map<Node*, int> mpp;
+    Node* temp = head;
+    int timer = 1;
+    while( temp != NULL){
+        if ( mpp.find( temp) != mpp.end()){
+            int value = mpp[temp];
+            return timer - value;}
+        mpp[temp] = timer;
+        timer++;
+        temp = temp->next;
+    }
+    return 0;   
+};
+// optimal: slow and fast pointer
+int lengthLoop1( Node* head){
+    Node* slow = head;
+    Node* fast = head;
+    while( fast != NULL && fast->next != NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+        if ( slow == fast) return findlength(slow, fast);
+        return 0;}
+};
+int findlength( Node* slow, Node* fast){
+    int length = 1;
+    Node* fast = fast->next;
+    while( fast != slow){
+        length++;
+        fast = fast->next;
+    }
+    return length;
+};
+int main(){
+    return 0;
+}
