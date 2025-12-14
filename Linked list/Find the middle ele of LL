@@ -1,0 +1,50 @@
+// brute: count the no of nodes and then traverse again to find middle
+#include <iostream>
+using namespace std;
+class Node {
+    public:
+    int data;
+    Node* next;
+
+    public:
+    Node( int data1, Node* next1) {         // constructor
+        data = data1;
+        next = next1;
+    }
+
+    public:
+    Node (int data1) {         // constructor
+        data = data1;
+        next = nullptr;
+    }
+};
+Node* midEle( Node* head){
+    int count = 0;
+    Node* temp = head;
+    while( temp != NULL){
+        count++;
+        temp = temp->next;
+    }
+    int mid = count / 2;
+    temp = head;
+    while( temp!= NULL){
+        mid--;
+        if( mid == 0) break;
+        temp = temp->next;
+    }
+    return temp;
+};
+
+// optimal: slow and fast pointer [ Tortoise and hare algorithm]
+Node* middleEle1( Node* head){
+    Node* slow = head;
+    Node* fast = head;
+    while( fast != NULL && fast->next != NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+};
+int main(){
+    return 0;
+}
