@@ -1,0 +1,33 @@
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+class Node {
+    public:
+    int data;
+    Node* next;
+
+    public:
+    Node( int data1, Node* next1) {         // constructor
+        data = data1;
+        next = next1;
+    }
+
+    public:
+    Node (int data1) {         // constructor
+        data = data1;
+        next = nullptr;
+    }
+};
+// brute: using map
+Node* findStartOfLoop( Node* head){
+    unordered_map<Node*, int> map;
+    Node* temp = head;
+    while( temp != NULL){
+        if ( map.find( temp) != map.end()){
+            return temp;
+        }
+        map[temp] = true;
+        temp = temp->next;
+    }
+    return NULL;
+};
