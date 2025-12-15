@@ -31,3 +31,26 @@ Node* findStartOfLoop( Node* head){
     }
     return NULL;
 };
+
+
+// optimal: slow and fast pointer
+Node* findStartOfLoop1( Node* head){
+    Node* slow = head;
+    Node* fast = head;
+    
+    while( fast != NULL && fast->next != NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+        if ( slow == fast) {
+            while( slow != fast){
+                slow = slow->next;
+                fast = fast->next;
+            }
+            return slow;
+        }
+    }
+    return NULL;    
+};
+int main(){
+    return 0;
+}
