@@ -35,3 +35,58 @@ void findPairs( Node* head, int sum){
         temp1 = temp1->next;
     }
 };
+
+
+// optimal : uisng left and right pointer
+Node* findTail(Node* head){
+    Node* tail = head;
+    while( tail->next != NULL){
+        tail = tail->next;
+    }   
+    return tail;
+}
+vector<pair<int, int>> findPairsOptimised( Node* head, int sum){
+    vector<pair<int, int>> result;
+    if( head == NULL) return result;
+    Node* left = head;
+    Node* right = findTail(head);
+    while( left != right && right->next != left){
+        int currentSum = left->data + right->data;
+        if ( currentSum == sum){
+            result.push_back( make_pair( left->data, right->data));
+            left = left->next;
+            right = right->back;
+        }
+        else if ( currentSum < sum){
+            left = left->next;
+        }
+        else {
+            right = right->back;
+        }
+    }
+    return result;
+}
+int main() {
+    // 1. Create nodes
+    Node* head = new Node(1);
+    Node* second = new Node(2);
+    Node* third = new Node(4);
+    Node* fourth = new Node(5);
+
+    // 2. Link them together (Doubly Linked List structure)
+    head->next = second;
+    second->back = head;
+    
+    second->next = third;
+    third->back = second;
+    
+    third->next = fourth;
+    fourth->back = third;
+
+    // 3. Define the target sum and call your function
+    int targetSum = 6;
+    cout << "Pairs with sum " << targetSum << " are:" << endl;
+    findPairs(head, targetSum);
+
+    return 0;
+}
