@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+class Node {
+    public:
+    int data;
+    Node* next;
+    Node* prev;
+
+    public:
+    Node( int data1, Node* next1, Node* prev1) {         // constructor
+        data = data1;
+        next = next1;
+        prev = prev1;
+    }
+
+    public:
+    Node (int data1) {         // constructor
+        data = data1;
+        next = nullptr;
+        prev = nullptr;
+    }
+};
+Node* findNode( Node* head, int k){
+    Node* temp = head;
+    while( k -1 && temp != NULL){
+        temp = temp->next;
+        k--;
+    }
+    return temp;
+} ;
+Node* rotateLL( Node* head, int k){
+    if ( head == NULL || k == 0) return head;
+    Node* tail = head;
+    int len = 1;
+    while( tail->next != NULL){
+        len++;
+        tail = tail->next;
+    }
+    k = k % len;
+    if ( k == 0) return head;
+    tail->next = head; // make it circular
+   Node* newLastNode = findNode( head, len - k);
+   head = newLastNode->next;
+   newLastNode->next = NULL;
+    return head;
+} ;
+int main(){
+    return 0;
+}
