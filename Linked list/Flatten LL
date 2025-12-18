@@ -52,3 +52,37 @@ Node* flattenLL( Node* head ){
     sort( arr.begin(), arr.end());
     Node* head = convert(arr);    
 } ;
+
+// optimal: instead of creating newLL we can rearrange the pointers of existing LL
+Node* mergeTwoSortedLLOptimal( Node* head1, Node* head2){
+    if ( head1 == NULL) return head2;
+    if ( head2 == NULL) return head1;
+    Node* dummy = new Node(-1);
+    Node* mover = dummy;
+    Node* temp1 = head1;
+    Node* temp2 = head2;
+    while( temp1 != NULL && temp2 != NULL){
+        if ( temp1->data < temp2->data){
+            mover->child = temp1;
+            mover = temp1;
+            temp1 = temp1->next;
+        }
+        else{
+            mover->child = temp2;
+            mover = temp2;
+            temp2 = temp2->next;
+        }
+        mover->next = NULL;
+    }
+    if ( temp1 != NULL) mover->child = temp1;
+    if ( temp2 != NULL) mover->child = temp2;
+    return dummy->child;
+};
+Node* flattenLLOptimal( Node* head){
+    if ( head == NULL || head->next == NULL) return head;
+    Node* mergeHead = flattenLLOptimal( head->next);
+    return mergeTwoSortedLLOptimal( head, mergeHead);
+};
+int main(){
+    return 0;
+}
