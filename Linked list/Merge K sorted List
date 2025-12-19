@@ -41,3 +41,58 @@ Node* mergeTwoSortedLLBrute( vector<Node*> &lists, Node* head){
     head = convertArr2LL(arr);
     return head;
 }
+// better: merge two sorted LL in place
+Node* mergeTwoSortedLLBetter( vector<Node*> & lists, Node* head){
+    head= lists[0];
+    for ( int i = 1; i < lists.size(); i++){
+        head = mergeTwoSortedLLNext( head, lists[i]);
+    }
+    return head;
+}
+// Helper function to merge two sorted LL using next pointers
+Node* mergeTwoSortedLLNext( Node* head1, Node* head2){
+    if ( head1 == NULL) return head2;
+    if ( head2 == NULL) return head1;
+    Node* dummy = new Node(-1);
+    Node* mover = dummy;
+    Node* temp1 = head1;
+    Node* temp2 = head2;
+    while( temp1 != NULL && temp2 != NULL){
+        if ( temp1->data < temp2->data){
+            mover->next = temp1;
+            mover = temp1;
+            temp1 = temp1->next;
+        }
+        else{
+            mover->next = temp2;
+            mover = temp2;
+            temp2 = temp2->next;
+        }
+    }
+    if ( temp1 != NULL) mover->next = temp1;
+    if ( temp2 != NULL) mover->next = temp2;
+    return dummy->next;
+}
+
+// optimal: Use concept of MIN-HEAP / PRIORITY QUEUE
+Node* mergeKlist( vector<Node*> & listArray){
+    priority_queue< pair<int, Node*>,vector<pair<int,Node*>> , greater< pair<int,Node*>> > pq;
+    for ( int i = 0; i < listArray.size(); i++){
+        if ( listArray[i] != NULL){
+            pq.push( { listArray[i]->data, listArray[i]});
+        }
+    }
+    Node* dummy = new Node(-1);
+    Node* mover = dummy;
+    while( !pq.empty()){
+        auto it = pq.top();
+        pq.pop();
+        if( it.second->next != NULL){
+            pq.push( { it.second->next->data, it.second->next});
+        }
+        mover->next = it.second;
+        mover = mover->next;
+    }
+    return dummy->next;
+}
+
