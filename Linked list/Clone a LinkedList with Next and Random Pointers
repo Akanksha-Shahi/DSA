@@ -50,3 +50,93 @@ Node* cloneLLUsingMap( Node* head){
     }
     return mp[head];
 }
+
+// optimal: insert the node in between original nodes, connect random pointers and connect next pointers
+void insertCopyinBtw( Node* head){
+    Node* temp = head;
+    while( temp != nullptr){
+        Node* nextEle = temp->next;
+        Node* copyNode = new Node( temp->data);
+        copyNode->next = nextEle;
+        temp->next = copyNode;
+        temp = nextEle;
+    }
+}
+void connectRandomPointers( Node* head){
+    Node* temp = head;
+    while( temp != nullptr){
+        Node* copyNode = temp->next;
+        if ( temp->random){
+            copyNode->random = temp->random->next;
+        }
+        else{
+            copyNode->random = nullptr;
+        }
+        temp = temp->next->next;
+    }
+}
+Node* getDeepCopyList(Node* head){
+    Node* temp = head;
+    Node* dummyNode= new Node(-1);
+    Node* res = dummyNode;
+    while( temp != nullptr){
+        // creating new list
+        res->next = temp->next;
+        res = res->next;
+        // disconnecting and going back to 
+        // initial state of LL
+        temp->next = temp->next->next;
+        temp = temp->next;
+    }
+    return dummyNode->next;
+}
+Node* cloneLl(Node* head){
+    // step1: insert copy nodes in between original nodes
+    insertCopyinBtw(head);
+    // step2: connect random pointers of copy nodes
+    connectRandomPointers(head);
+    // step3: separate both lists
+    return getDeepCopyList(head);
+}
+int main() {
+    Node* head = new Node(1);
+    head->next = new Node(2);
+    head->next->next = new Node(3);
+    head->next->next->next = new Node(4);
+    head->next->next->next->next = new Node(5);
+
+    head->random = head->next->next;               // 1's random points to 3
+    head->next->random = head;                     // 2's random points to 1
+    head->next->next->random = head->next->next->next->next; // 3's random points to 5
+    head->next->next->next->random = head->next->next; // 4's random points to 3
+    head->next->next->next->next->random = head->next; // 5's random points to 2
+
+    Node* clonedHead = cloneLl(head);
+
+    // Print original and cloned list to verify
+    Node* temp1 = head;
+    Node* temp2 = clonedHead;
+    cout << "Original list:\n";
+    while (temp1) {
+        cout << "Node data: " << temp1->data;
+        if (temp1->random) {
+            cout << ", Random points to: " << temp1->random->data << "\n";
+        } else {
+            cout << ", Random points to: nullptr\n";
+        }
+        temp1 = temp1->next;
+    }
+
+    cout << "\nCloned list:\n";
+    while (temp2) {
+        cout << "Node data: " << temp2->data;
+        if (temp2->random) {
+            cout << ", Random points to: " << temp2->random->data << "\n";
+        } else {
+            cout << ", Random points to: nullptr\n";
+        }
+        temp2 = temp2->next;
+    }
+
+    return 0;
+}
