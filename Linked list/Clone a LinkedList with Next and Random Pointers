@@ -1,0 +1,52 @@
+// Clone a LL with next and random pointer
+#include <iostream>
+#include <unordered_map>
+#include <algorithm>
+using namespace std;
+class Node {
+    public:
+    int data;
+    Node* next;
+    Node* prev;
+    Node* child;
+    Node* random;
+
+    public:
+    Node( int data1, Node* next1, Node* prev1, Node* child1, Node* random1) {         // constructor
+        data = data1;
+        next = next1;
+        prev = prev1;
+        child = child1;
+        random = random1;
+    }
+
+    public:
+    Node (int data1) {         // constructor
+        data = data1;
+        next = nullptr;
+        prev = nullptr;
+        child = nullptr;
+        random = nullptr;
+    }
+};
+// brute: by creating hash map
+Node* cloneLLUsingMap( Node* head){
+    if ( head == nullptr) return nullptr;
+    unordered_map<Node*, Node*> mp;
+    Node* temp = head;
+    // creating copy nodes and storing in map
+    while( temp != nullptr){
+        Node* newNode = new Node ( temp->data);
+        mp[temp] = newNode;
+        temp = temp->next;
+    }
+    // connecting next and random pointers
+    temp = head;
+    while( temp != nullptr){
+        Node* copyNode = mp[temp];
+        copyNode->next = mp[temp->next];
+        copyNode->random = mp[temp->random];
+        temp = temp->next;
+    }
+    return mp[head];
+}
