@@ -42,7 +42,7 @@ int main() {
 
 
 
-// better: usinh hashing ( iterate over the array and add values to hash, as soon as the count == 3 put that element to ans )
+// better: using hashing ( iterate over the array and add values to hash, as soon as the count == 3 put that element to ans )
 #include <iostream>
 #include <vector>
 #include <map>
