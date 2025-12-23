@@ -1,0 +1,28 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+void printrec(int index, vector<int> &ds, int arr[], int n){
+    // base case
+    if (index == n){
+        // print the subsequence
+        for (auto it: ds){
+            cout<< it<< " ";
+        }
+        if(ds.size() ==0) cout<<"{}";
+        cout<< endl;
+        return;
+    }
+    // take or include the element
+    ds.push_back(arr[index]);
+    printrec(index +1, ds, arr, n);
+    // not take or exclude the element
+    ds.pop_back();
+    printrec(index +1, ds, arr, n);
+}
+int main(){
+    int arr[]={3,1,2};
+    int n=3;
+    vector<int> ds;
+    printf(0, ds, arr,n);
+    return 0;
+}
