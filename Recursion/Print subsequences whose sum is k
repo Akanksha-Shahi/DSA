@@ -29,3 +29,36 @@ int main(){
     printS(0, ds, 0, sum, arr, n);
     return 0;
 }
+
+// print a single subsequence with sum is sum
+#include<iostream>
+using namespace std;
+bool printS1( int ind, vector<int > &ds, int s, int sum, int arr[], int n){
+    // base case
+    if (ind == n){
+        if (s == sum){
+            for (auto it: ds){
+                cout<< it<< " ";
+            }
+            if(ds.size() ==0) cout<<"{}";
+            cout<< endl;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    // take or include the element
+    ds.push_back(arr[ind]);
+    s += arr[ind];
+    if (printS1(ind +1, ds, s, sum, arr, n) == true){
+        return true;
+    }
+    // not take or exclude the element
+    s -= arr[ind];
+    ds.pop_back();
+    if (printS1(ind +1, ds, s, sum, arr, n) == true){
+        return true;
+    }
+    return false;
+}
