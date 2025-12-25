@@ -1,0 +1,30 @@
+// subset sum 
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+void func( int ind,int sum , vector<int> &arr, vector<int> &ds){
+    // base case
+    if (ind == arr.size()){
+        ds.push_back(sum);
+        return;
+    }
+    // take or include the element
+    func(ind +1, sum + arr[ind], arr, ds);
+    // not take or exclude the element
+    func(ind +1, sum, arr, ds);
+}
+vector<int> subsetSum(vector<int> &arr){
+    vector<int> ds;
+    func(0, 0, arr, ds);
+    sort(ds.begin(), ds.end());
+    return ds;
+}
+int main(){
+    vector<int> arr= {3,1,2};
+    vector<int> ans= subsetSum(arr);
+    for (auto it: ans){
+        cout<< it<< " ";
+    }
+    return 0;
+}
