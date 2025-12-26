@@ -28,3 +28,40 @@ int main(){
     }
     return 0;
 }
+
+
+// Subset Sum 2 [ no duplicate subsets allowed]
+#include <iostream>
+#include <vector>
+#include <set>
+#include <algorithm>
+using namespace std;
+void func( int ind, vector<int> &nums, vector<int> &ds, vector<vector<int>> &s){
+    s.push_back(ds);
+    for (int i= ind; i< nums.size(); i++){
+        if (i > ind && nums[i] == nums[i -1]) continue; // skip duplicates
+        // take or include the element
+        ds.push_back(nums[i]);
+        func(i +1, nums, ds, s);
+        ds.pop_back();
+    }
+}
+vector<vector<int>> subsetsWithDup(vector<int> &nums){
+
+    vector<vector<int>> s;
+    vector<int> ds;
+    sort(nums.begin(), nums.end());
+    func(0, nums, ds, s);
+    return s;
+}
+int main(){
+    vector<int> arr= {1,2,2};
+    vector<vector<int>> ans= subsetsWithDup(arr);
+    for (auto it: ans){
+        for (auto i: it){
+            cout<< i<< " ";
+        }
+        cout<< endl;
+    }
+    return 0;
+}
