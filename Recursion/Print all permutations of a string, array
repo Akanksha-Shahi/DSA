@@ -28,3 +28,29 @@ vector<vector<int>> permute(vector<int> &num){
     func(ds, num, ans, freq);
     return ans;
 }
+
+// optimal: without using extra space
+void permutat(int index, vector<int> &nums, vector<vector<int>> &ans){
+    // base case
+    if (index == nums.size()){
+        ans.push_back(nums);
+        return;
+    }
+    for (int i= index; i< nums.size(); i++){
+        swap(nums[index], nums[i]);
+        permutat(index +1, nums, ans);
+        swap(nums[index], nums[i]); // backtrack
+    }
+}
+int main(){
+    vector<int> arr= {1,2,3};
+    vector<vector<int>> ans= permute(arr);
+    for (auto it: ans){
+        for (auto i: it){
+            cout<< i<< " ";
+        }
+        cout<< endl;
+    }
+    return 0;
+}
+
