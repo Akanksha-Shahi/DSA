@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+bool isSafe( int node, vector<int> &color, vector<vector<int>> &graph, int col){
+    for ( auto it: graph[node]){
+        if ( color[it] == col){
+            return false;
+        }
+    }
+    return true;
+}
+bool solveMColoring( int node, vector<int> &color, vector<vector<int>> &graph, int m){
+    // base case
+    if ( node == graph.size()){
+        return true;
+    }
+    for ( int col= 1; col<= m; col++){
+        if ( isSafe( node, color, graph, col)){
+            color[node]= col;
+            if ( solveMColoring( node +1, color, graph, m)){
+                return true;
+            }
+            color[node]= 0; // backtrack
+        }
+    }
+    return false;
+}
+bool graphColoring( vector<vector<int>> &graph, int m){
+    vector<int> color( graph.size(), 0);
+    if ( solveMColoring( 0, color, graph, m)){
+        return true;
+    }
+    return false;
+}
+int main(){
+    // Example usage for M-Coloring Problem
+    int n = 4; // Number of nodes
+    int m = 3; // Number of colors
+    vector<vector<int>> graph = {
+        {1, 2},
+        {0, 2, 3},
+        {0, 1},
+        {1}
+    };
+    if (graphColoring(graph, m)) {
+        cout << "Solution exists" << endl;
+    } else {
+        cout << "No solution exists" << endl;
+    }
+    return 0;
+}
