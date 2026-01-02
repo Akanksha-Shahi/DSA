@@ -17,3 +17,29 @@ int func( string s){
     }
     return maxLength;
 }
+
+// optimal : O(n) using sliding window
+int funct( string s){
+    unordered_map<char, int> charIndexMap;
+    int hash[256] = {-1}; // initialize all to -1
+    int left =0, right =0;
+    int maxLength =0;
+    while( right < s.length()){
+        if( hash[s[right]] != -1){ // character already found
+            if( hash[s[right]] >= left){
+                left = hash[s[right]] + 1;
+            }
+        }
+    int len = right - left + 1;
+    maxLength = max( maxLength, len);    
+    hash[s[right]] = right; // update character index
+    right++;
+    }
+    return maxLength;
+}
+int main(){
+    string s= "abcabcbb";
+    int ans= func( s);
+    cout<< ans<< endl;
+    return 0;
+}
