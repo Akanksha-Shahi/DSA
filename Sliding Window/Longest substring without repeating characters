@@ -1,0 +1,19 @@
+#include<iostream>
+#include<unordered_map>
+using namespace std;
+// brute: O(n^2) generate all substrings using 'i' and 'j'
+int func( string s){
+    int len =0;
+    unordered_map<char, int> charIndexMap;
+    int maxLength =0;
+    for( int i =0; i<s.length(); i++){
+        int hash[256] = {0}; // initialize all to 0
+        for( int j=i; j<s.length(); j++){
+            if( hash[s[j]] == 1) break; // repeating character found
+            len = j - i + 1;
+            maxLength = max( maxLength, len);
+            hash[s[j]] = 1; // mark character as found
+        }    
+    }
+    return maxLength;
+}
