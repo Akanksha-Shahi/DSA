@@ -1,7 +1,7 @@
 #include<iostream>
 #include<unordered_map>
 using namespace std;
-// brute: O(n^2) generate all substrings using 'i' and 'j'
+// brute: O(n^2) generate all substrings using 'i' and 'j' [ using hashmap ] 
 int func( string s){
     int len =0;
     unordered_map<char, int> charIndexMap;
