@@ -17,3 +17,22 @@ int funcb( vector<int> &nums, int k){
     }
     return maxLen;
 }
+
+// better: o(2n) use two pointer and sliding window
+int funcbt( vector<int> &nums, int k){
+    int maxlen=0;
+    int l=0, r=0;
+    int zeros = 0;
+    while( r<nums.size()){
+        if ( nums[r]==0) zeros++;
+        while( zeros > k){
+            if ( a[l] == 0) zeros--; left ++;
+        }
+        if ( zeros <= k){
+            int len = r-l+1;
+            maxlen = max( len, maxlen);
+        }
+    r++;  
+    }
+    return maxlen;
+}    
