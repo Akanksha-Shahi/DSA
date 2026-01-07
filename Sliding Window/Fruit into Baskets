@@ -17,3 +17,22 @@ int basket(vector<int>&arr ){
     }
     return maxlen;
 }
+
+// better: use two pointer and a hash map data structure
+int func ( vector<int> &arr, int k){
+    int l =0, r=0, maxlen=0;
+    unordered_map<int, int> mpp;
+    while( r < arr.size()){
+        mpp[arr[r]]++;
+        if ( mpp.size() > k){
+            while( mpp.size() > k){
+                mpp[arr[l]]--;
+                if ( mpp[arr[l]] == 0) mpp.erase(arr[l]);
+                l++;
+            }
+        }
+        if ( mpp.size() <= k) maxlen = max( maxlen, r-l+1);
+        r++;
+    }
+    return maxlen;
+}
