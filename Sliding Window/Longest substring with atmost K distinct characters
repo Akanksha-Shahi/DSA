@@ -19,3 +19,22 @@ int func( string &s, int k){
     }
     return maxlen;
 }
+
+
+// better: two pointer and sliding window
+int func1( string &s, int k ){
+    int maxlen=0, l=0, r=0;
+    int n = s.size();
+    unordered_map< char, int> mpp;
+    while( r<n){
+        mpp[s[r]]++;
+        while( mpp.size() > k){
+            mpp[s[l]]--;
+            if( mpp[s[l]] == 0) mpp.erase(mpp[s[l]]);
+            l++;
+        }
+        if( mpp.size() <=k) maxlen = max( maxlen, r-l+1);
+        r++;
+    }
+    return maxlen;
+}    
