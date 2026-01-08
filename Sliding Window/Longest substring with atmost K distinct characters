@@ -38,3 +38,31 @@ int func1( string &s, int k ){
     }
     return maxlen;
 }    
+
+
+// optimal:
+int func2( string &s, int k ){
+    int maxlen=0, l=0, r=0;
+    int n = s.size();
+    unordered_map< char, int> mpp;
+    while( r<n){
+        mpp[s[r]]++;
+        if( mpp.size() > k){
+            mpp[s[l]]--;
+            if( mpp[s[l]] == 0) mpp.erase(mpp[s[l]]);
+            l++;
+        }
+        if( mpp.size() <=k) maxlen = max( maxlen, r-l+1);
+        r++;
+    }
+    return maxlen;
+}    
+int main(){
+    string s = "aaabbccd";
+    int k =2;
+    cout << func(s, k) << endl;
+    cout << func1(s, k) << endl;
+    cout << func2(s, k) << endl;
+    
+    return 0;
+}
