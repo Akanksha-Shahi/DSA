@@ -44,3 +44,32 @@ int func1( string &s, int k ){
     }
     return maxlen;
 }
+
+// optimal
+int func2( string &s, int k ){
+    int l=0, r=0, maxlen=0, maxf=0;
+    hash[26]={0};
+    while( r<s.size()){
+        hash[s[r]-'A']++;
+        maxf = max( maxf, hash[s[r]-'A']);
+        int len = r - l + 1;
+        int toChange = len - maxf;
+        if( toChange > k){
+            hash[s[l]-'A']--;
+            l++;
+        }
+        len = r - l + 1;
+        if( len - maxf <= k) maxlen = max( maxlen, len);
+        r++;
+    }
+    return maxlen;
+}
+int main(){
+    string s = "AABABBA";
+    int k =1;
+    cout << func(s, k) << endl;
+    cout << func1(s, k) << endl;
+    cout << func2(s, k) << endl;
+    
+    return 0;
+}
