@@ -21,3 +21,26 @@ int func( string &s, int k){
     }
     return maxlen;
 }
+
+// better: two pointer ans sliding window
+int func1( string &s, int k ){
+    int l=0, r=0, maxlen=0, maxf=0;
+    hash[26]={0};
+    while( r<s.size()){
+        hash[s[r]-'A']++;
+        maxf = max( maxf, hash[s[r]-'A']);
+        int len = r - l + 1;
+        int toChange = len - maxf;
+        while( toChange > k){
+            hash[s[l]-'A']--;
+            maxf =0;
+            for( int i =0; i<26; i++) maxf = max( maxf, hash[i]);
+            l++;
+            len = r - l + 1;
+            toChange = len - maxf;
+        }
+        if( toChange <= k) maxlen = max( maxlen, len);
+        r++;
+    }
+    return maxlen;
+}
