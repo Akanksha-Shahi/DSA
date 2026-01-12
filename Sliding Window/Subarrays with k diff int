@@ -12,3 +12,30 @@ int func( vector<int> &nums, int k ){
     }
     return count;
 }
+
+// optimal:
+int func1( vector<int> &nums, int k ){
+    auto atMostK = [&]( int k){
+        int l=0, r=0, count=0;
+        unordered_map<int, int> hash;
+        while( r<nums.size()){
+            hash[nums[r]]++;
+            while( hash.size() > k){
+                hash[nums[l]]--;
+                if( hash[nums[l]] == 0) hash.erase(nums[l]);
+                l++;
+            }
+            count += (r - l + 1);
+            r++;
+        }
+        return count;
+    };
+    return atMostK(k) - atMostK(k-1);
+}
+int main(){
+    vector<int> nums = {1,2,1,2,3};
+    int k =2;
+    cout << func( nums, k) << endl;
+    cout << func1( nums, k) << endl;
+    return 0;
+}
