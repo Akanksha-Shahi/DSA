@@ -1,0 +1,17 @@
+// Shortest Job first
+#include<bits/stdc++.h>
+using namespace std;
+int func( vector<int> &arr){
+    int t=0, wtTime=0;
+    sort( arr.begin(), arr.end());
+    for( int i =0; i<arr.size(); i++){
+        wtTime += t;
+        t+= arr[i];
+    }
+    return ( wtTime/arr.size());
+}
+int main(){
+    vector<int> arr = {3,2,1,5,4};
+    cout << func(arr) << endl;
+    return 0;
+}
