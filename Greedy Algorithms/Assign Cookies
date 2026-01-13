@@ -1,0 +1,22 @@
+#include<bits/stdc++.h>
+using namespace std;
+int func( vector<int> &greed, vector<int> &s){
+    int n = greed.size();
+    int m = s.size();
+    int l=0, r=0;
+    sort(greed.begin(), greed.end());
+    sort(s.begin(), s.end());
+    while(l < m && r < n){
+        if(greed[r] <= s[l]){
+            r++;
+        }
+        l++;
+    }
+    return r;
+}
+int main(){
+    vector<int> greed = {1,2,3};
+    vector<int> s = {1,1};
+    cout << func(greed, s) << endl;
+    return 0;
+}
