@@ -1,0 +1,16 @@
+// Jump Game
+#include<bits/stdc++.h>
+using namespace std;
+bool func( vector<int> &arr){
+    int maxInd =0;
+    for( int i =0; i< arr.size(); i++){
+        if( i> maxInd) return false;
+        maxInd= max( maxInd, i+arr[i]);
+    }
+    return true;
+}
+int main(){
+    vector<int> arr = {2,3,1,1,4};
+    cout << func(arr) << endl;
+    return 0;
+}
