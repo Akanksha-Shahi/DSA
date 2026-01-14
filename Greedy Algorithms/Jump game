@@ -28,3 +28,24 @@ int func( vector< int> &ind, int jumps){
     }
     return minJumps;
 }
+
+
+// optimal : greedy approach
+int func2( vector<int> &arr){
+    int jumps=0, l=0, r=0;
+    while( r< arr.size()-1){
+        int farthest =0;
+        for( int i = l; i<= r; i++){
+            farthest = max( farthest, i+ arr[i]);
+        }
+        l=r+1;
+        jumps++;
+        r = farthest;
+    }
+    return jumps;
+}
+int main(){
+    vector<int> arr = {2,3,1,1,4};
+    cout << func2(arr) << endl;
+    return 0;
+}
