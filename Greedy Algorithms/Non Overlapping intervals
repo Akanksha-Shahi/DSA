@@ -1,0 +1,22 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool comp( vector<int> &a, vector<int> &b){
+    return a[1] < b[1];
+}
+int func( vector<vector<int>> &arr){
+    sort( arr.begin(), arr.end(), comp);
+    int count =1;
+    int freeTime = arr[0][1];
+    for( int i =1; i< arr.size(); i++){
+        if( arr[i][0] >= freeTime){
+            count++;
+            freeTime = arr[i][1];
+        }
+    }
+    return arr.size() - count;
+}
+int main(){
+    vector<vector<int>> arr = { {1,2}, {2,3}, {3,4}, {1,3} };
+    cout << func(arr) << endl;
+    return 0;
+}
