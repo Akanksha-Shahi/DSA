@@ -1,0 +1,16 @@
+#include<bits/stdc++.h>
+using namespace std;
+// brute force
+int func( vector<int> &arr, vector<int> &dept){
+    int maxCount =0;
+    for( int i =0; i< arr.size(); i++){
+        int count =1;
+        for( int j =i+1; j< arr.size(); j++){
+            if( ( arr[i] <= arr[j] && arr[j] < dept[i]) || ( arr[j] <= arr[i] && arr[i] < dept[j]) ){
+                count++;
+            }
+        }
+        maxCount = max( maxCount, count);
+    }
+    return maxCount;
+}
