@@ -14,3 +14,28 @@ int func( vector<int> &arr, vector<int> &dept){
     }
     return maxCount;
 }
+// optimal: as the time passes by
+int func2( vector<int> &arr, vector<int> &dept){
+    int count =0, maxCount=0;
+    sort(arr.begin(), arr. end());
+    sort( dept.begin(), dept.end());
+    int i =0, j=0;
+    while( i< arr.size()){
+        if( arr[i]<=dept[j]){
+            count++;
+            i++;
+        }
+        else{
+            count--;
+            j++;
+        }
+        maxCount = max( maxCount, count);
+    }
+    return maxCount;
+}
+int main(){
+    vector<int> arr = {900, 940, 950, 1100, 1500, 1800};
+    vector<int> dept = {910, 1200, 1120, 1130, 1900, 2000};
+    cout << func2(arr, dept) << endl;
+    return 0;
+}
