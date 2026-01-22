@@ -8,3 +8,29 @@ int func( string &s, int ind, int count){
     else if( s[ind] == ')') return func( s, ind+1, count-1);
     else return func( s, ind+1, count+1) || func( s, ind+1, count-1) || func( s, ind+1, count);
 }
+// optimal: instead of maintaing a count maintain a range
+bool func2( strirng &s){
+    int min =0, max =0;
+    for ( int i =0; i<s.length(); i++){
+        if( s[i] == '('){
+            min++;
+            max++;
+        }
+        else if( s[i] == ')'){
+            min--;
+            max--;
+        }
+        else{
+            min--;
+            max++;
+        }
+        if( max <0) return false;
+        if( min <0) min =0;
+    }
+    return ( min ==0) true;
+}
+int main(){
+    string s = "(*))";
+    cout << func2(s) << endl;
+    return 0;
+}
