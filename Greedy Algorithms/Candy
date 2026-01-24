@@ -36,3 +36,34 @@ int func2( vector<int> &ratings){
     }
     return sum;
 }
+
+// optimal: using the concept of slope
+int func3( vector<int> &ratings){
+    int sum =1, i=1;
+    while( i< ratings.size()){
+        if( ratings[i] == ratings[i-1]){
+            sum++;
+            i++;
+            continue;
+        }
+        int peak =1;
+        while( i< ratings.size() && ratings[i]> ratings[i-1]){
+            peak++;
+            sum += peak;
+            i++;
+        }
+        int down =1;
+        while( i< ratings.size() && ratings[i]< ratings[i-1]){
+            sum += down;
+            i++; 
+            down++;
+        }
+        if( down>peak) sum += down -peak;
+    }
+    return sum;
+}
+int main(){
+    vector<int> ratings = {1,0,2};
+    cout << func3(ratings) << endl;
+    return 0;
+}
