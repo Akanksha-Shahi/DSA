@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+using namespace std;
+// brute: look for left and right neighbours and then find max
+int func( vector<int> &ratings){
+    vector<int> &left;
+    vector<int> &right;
+    left[0]=1, right[n-1]=1;
+    for( int i =1; i< ratings.size(); i++){
+        if( ratings[i] > ratings[i-1]) left[i] = left[i-1] +1;
+        else left[i] =1;
+    }
+    for( int i = ratings.size()-2; i>=0; i--){
+        if( ratings[i] > ratings[i+1]) right[i] = right[i+1] +1;
+        else right[i] =1;
+    }
+    int sum =0;
+    for( int i =0; i<ratings.size(); i++){
+        sum += max(left[i], right[i]);
+    }
+    return sum;
+}
