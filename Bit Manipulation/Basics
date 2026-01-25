@@ -16,3 +16,22 @@ int main(){
     cout << convert2binary(n) << endl;
     return 0;
 }
+
+
+// Convert to decimal
+#include<bits/stdc++.h>
+using namespace std;
+string convert2Decimal( string x){
+    int len = x.length();
+    int p2 =1, num =0;
+    for( int i = len-1; i>=0; i--){
+        if( x[i] == '1') num += p2;
+        p2 *= 2;
+    }
+    return to_string(num);
+}
+int main(){
+    string x = "1010";
+    cout << convert2Decimal(x) << endl;
+    return 0;
+}
