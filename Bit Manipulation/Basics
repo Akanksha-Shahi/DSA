@@ -71,3 +71,33 @@ int main(){
     cout<< minBit( start, goal)<< endl;
     return 0;
 }
+
+
+// Power Set
+#include<bits/stdc++.h>
+using namespace std;
+void func( vector<int> &nums, vector<vector<int>> &ans){
+    int n = nums.size();
+    int subsets = 1<<n;
+    for ( int num =0; num< subsets; num++){
+        vector<int> list;
+        for( int i =0; i<n; i++){
+            if( num & ( 1<< i)){
+                list.push_back( nums[i]);
+            }
+        }
+        ans.push_back( list);
+    }
+}
+int main(){
+    vector<int> nums = {1,2,3};
+    vector<vector<int>> ans;
+    func( nums, ans);
+    for( auto x: ans){
+        for( auto y: x){
+            cout << y << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
