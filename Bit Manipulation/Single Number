@@ -28,7 +28,7 @@ int main(){
 
 
 
-// Singlew Number-II
+// Single Number-II
 #include<bits/stdc++.h>
 using namespace std;
 // brute: use map
@@ -56,4 +56,31 @@ int singleNumBit( vector<int> &nums){
         }
     }
     return result;
+}
+// optimal 1: using sorting
+int singleNumSort( vector<int> &nums){
+    sort( nums.begin(), nums.end());
+    for( int i =0; i< nums.size(); i+=3){
+        if( i+1 >= nums.size() || nums[i] != nums[i+1]){
+            return nums[i];
+        }
+    }
+    return -1;
+}
+// optimal 2: using the concept of buckets
+int singleNumBucket( vector<int> &nums){
+    int ones =0, twos =0;
+    for( int i =0; i< nums.size(); i++){
+        ones = ( ones ^ nums[i]) & ~twos;
+        twos = ( twos ^ nums[i]) & ~ones;
+    }
+    return ones;
+}
+int main(){
+    vector<int> nums = {2,2,3,2};
+    cout << singleNum( nums) << endl;
+    cout << singleNumBit( nums) << endl;
+    cout << singleNumSort( nums) << endl;
+    cout << singleNumBucket( nums) << endl;
+    return 0;
 }
