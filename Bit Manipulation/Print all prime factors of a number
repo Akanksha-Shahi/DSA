@@ -23,3 +23,50 @@ vector<int> primeFactors( int n){
     }
     return list;
 }
+// better
+vector<int> primeFactors1( int n){
+    vector<int> list;
+    for( int i =1; i<= sqrt(n); i++){
+        if( n%i ==0 && prime(i)){
+            list.push_back(i);
+        }
+        if( n/i != i){
+            if( prime( n/i)){
+                list.push_back( n/i);
+            }
+        }
+    }
+    return list;
+}
+// optimal1
+vector<int> primeFactors2( int n){
+    vector<int> list;
+    for( int i =2; i<= n; i++){
+        if( n%i ==0){
+            list.push_back(i);
+            while( n%i == 0) n= n/i;
+        }
+    }
+    return list;
+}
+// optimal2
+vector<int> primeFactors3( int n){
+    vector<int> list;
+    for( int i =2; i<= sqrt(n); i++){
+        if( n%i ==0){
+            list.push_back(i);
+            while( n%i == 0) n= n/i;
+        }
+    }
+    if( n!= 1) list.push_back(n);
+    return list;
+}
+int main(){
+    int n =315;
+    vector<int> ans = primeFactors3( n);
+    for( auto it: ans){
+        cout << it << " ";
+    }
+    cout << endl;
+    return 0;
+}
