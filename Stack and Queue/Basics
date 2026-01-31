@@ -1,0 +1,57 @@
+// Stack using Array 
+#include<bits/stdc++.h>
+using namespace std;
+class Stack{
+    public: 
+    int top =-1;
+    int size[10];
+    void push( int x){
+        if( top>=10){
+            top++;
+            size[top]=x;
+        }
+    }
+    void pop(){
+        if( top == -1) return;
+        top--;
+    }
+    int top(){
+        if( top == -1) return;
+        return size[top];
+    }
+    int size(){
+        return top+1;
+    }
+}
+
+// Queue using array
+#include<bits/stdc++.h>
+using namespace std;
+class Queue{
+    public:
+    int size =10;
+    int start, end =-1;
+    int q[10];
+    int curSize =0;
+    void push( int x){
+        if( curSize == size) return;
+        if( curSize ==0) start = end =0;
+        else end  =( end+1)% size;
+        q[end]=x;
+        curSize++;
+    }
+    void pop(){
+       if( curSize == 0) return;  
+       if( curSize ==1) start = end = -1;
+       else start = ( start+1) % size;
+       cursize--;
+       return;
+    }
+    int top(){
+        if( curSize ==0) return -1;
+        return q[start];
+    }
+    int size(){
+        return curSize;
+    }
+}
