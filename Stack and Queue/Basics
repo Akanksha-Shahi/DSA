@@ -55,3 +55,41 @@ class Queue{
         return curSize;
     }
 }
+
+// Stack using Linked List
+#include<bits/stdc++.h>
+using namespace std;
+class Node{
+    public:
+    int data;
+    Node* next;
+    Node( int val){
+        data = val;
+        next = NULL;
+    };
+};
+class Stack{
+    public:
+    Node * top;
+    int size =0;
+    void push( int x){
+        Node* newNode = new Node(x);
+        newNode->next = top;
+        top = newNode;
+        size++;
+    }
+    void pop(){
+        if( top == NULL) return;
+        Node* temp = top;
+        top = top->next;
+        delete temp;
+        size--;
+    }
+    int topValue(){
+        if( top == NULL) return -1;
+        return top->data;
+    }
+    int sizeValue(){
+        return size;
+    }
+}
