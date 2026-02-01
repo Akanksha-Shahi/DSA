@@ -21,3 +21,45 @@ class stack{
         return st.top().first;
     }
 }
+
+// optimal: use single stack
+class stack{
+    stack<int> st;
+    int minEle;
+    void push( int val){
+        if( st.empty()){
+            st.push(val);
+            minEle = val;
+        }
+        else{
+            if( val >= minEle){
+                st.push(val);
+            }
+            else{
+                st.push( 2*val - minEle);
+                minEle = val;
+            }
+        }
+    }
+    void pop(){
+        if( st.empty()) return;
+        int top = st.top();
+        st.pop();
+        if( top < minEle){
+            minEle = 2*minEle - top;
+        }
+    }
+    int top(){
+        if( st.empty()) return -1;
+        int top = st.top();
+        if( top >= minEle) return top;
+        else return minEle;
+    }
+    int getMin(){
+        if( st.empty()) return -1;
+        return minEle;
+    }
+}
+int main(){
+    return 0;
+}
