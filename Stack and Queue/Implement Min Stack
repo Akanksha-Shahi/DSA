@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+// brute: use pair<int, int>
+class stack{
+    stack<pair<int, int>> st;
+    void push( int val){
+        if( st.empty()){
+            st.push({ val, val});
+        }
+        else{
+            int currMin = st.top().second;
+            st.push({ val, min( val, currMin)});
+        }
+    }
+    int getMin(){
+        if( st.empty()) return -1;
+        return st.top().second;
+    }
+    int top(){
+        if( st.empty()) return -1;
+        return st.top().first;
+    }
+}
