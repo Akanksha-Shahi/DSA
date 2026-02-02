@@ -123,3 +123,45 @@ string preToInfix( string s){
     }
     return st.top();
 }
+
+// Postfix to Prefix
+string postToPre( string s){
+    stack<string> st;
+    int i =0;
+    int n = s.length();
+    while( i < n){
+        char c = s[i];
+        if( ( c >= 'a' && c <= 'z') || ( c >= 'A' && c <= 'Z') || ( c >= '0' && c <= '9')){
+            string op(1, c);
+            st.push(op);
+        }
+        else{
+            string op2 = st.top(); st.pop();
+            string op1 = st.top(); st.pop();
+            string exp = c + op1 + op2;
+            st.push(exp);
+        }
+        i++;
+    }
+    return st.top();
+}
+// Prefix to Postfix
+string preToPost( string s){
+    stack<string> st;
+    int i = s.length() -1;
+    while( i >= 0){
+        char c = s[i];
+        if( ( c >= 'a' && c <= 'z') || ( c >= 'A' && c <= 'Z') || ( c >= '0' && c <= '9')){
+            string op(1, c);
+            st.push(op);
+        }
+        else{
+            string op1 = st.top(); st.pop();
+            string op2 = st.top(); st.pop();
+            string exp = op1 + op2 + c;
+            st.push(exp);
+        }
+        i--;
+    }
+    return st.top();
+}
