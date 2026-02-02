@@ -42,3 +42,42 @@ string infixToPost( string s ){
     }
     return ans;
 }
+
+// Infix to Prefix
+string infixToPre( string s){
+    reverse(s.begin(), s.end());
+    int i = 0;
+    int n  = s.length();
+    stack<char> st;
+    string ans = " ";
+    while( i < n){
+        char c = s[i];
+        if( ( c >= 'a' && c <= 'z') || ( c >= 'A' && c <= 'Z') || ( c >= '0' && c <= '9')){
+            ans += c;
+        }
+        else if( c == ')'){
+            st.push(c);
+        }
+        else if( c == '('){
+            while( !st.empty() && st.top() != ')'){
+                ans += st.top();
+                st.pop();
+            }
+            if( !st.empty()) st.pop();
+        }
+        else{
+            while( !st.empty() && priority( st.top()) > priority(c)){
+                ans += st.top();
+                st.pop();
+            }
+            st.push(c);
+        }
+        i++;
+    }
+    while(!st.empty()){
+        ans += st.top();
+        st.pop();
+    }
+    reverse( ans.begin(), ans.end());
+    return ans;
+}
