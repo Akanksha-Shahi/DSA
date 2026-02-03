@@ -42,3 +42,55 @@ int main(){
     }
     return 0;
 }
+
+
+
+// NEXT GREATER ELEMENT -II
+#include<bits/stdc++.h>
+using namespace std;
+// brute:
+vector<int> nextGreater(vector<int> &arr, int n){
+    vector<int> ans(n);
+    for( int i =0; i<n; i++){
+        for( int j=i+1; j< i+n; j++){
+            int ind = j%n;
+            if( arr[ind]> arr[i]){
+                ans[i] = arr[ind];
+                break;
+            }
+        }
+    }
+    return ans;
+}
+// optimal:
+list<int> nextGreatEle(vector<int> &arr, int n){
+    vector<int> ans(n);
+    stack<int> st;
+    for( int i = 2*n -1; i>=0; i--){
+        while( !st.empty() && st.top() <= arr[i%n]){
+            st.pop();
+        }
+        if( i < n){
+            if( st.empty()){
+                ans[i] = -1;
+            }
+            else{
+                ans[i] = st.top();
+            }
+        }
+        st.push( arr[i%n]);
+    }
+    return ans;
+}
+int main(){
+    int n; cin>> n;
+    vector<int> arr(n);
+    for( int i =0; i<n; i++){
+        cin>> arr[i];
+    }
+    vector<int> res = nextGreatEle( arr, n);
+    for( auto x: res){
+        cout<< x<< " ";
+    }
+    return 0;
+}
