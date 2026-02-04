@@ -28,3 +28,41 @@ int suffixMax( vector<int> &arr, int n){
     }
     return suffixMax;
 }
+
+
+// optimal: two pointer approach
+int findTotal( vector<int> &arr){
+    int lMax = rMax = total =0;
+    int l=0, r= n-1;
+    while( l<r){
+        if( arr[l] < arr[r]){
+            if( arr[l] >= lMax){
+                lMax = arr[l];
+            }
+            else{
+                total += lMax - arr[l];
+            }
+            l++;
+        }
+        else{
+            if( arr[r] >= rMax){
+                rMax = arr[r];
+            }
+            else{
+                total += rMax - arr[r];
+            }
+            r--;
+        }
+    }
+    return total;
+}
+int main(){
+    int n; cin>> n;
+    vector<int> arr(n);
+    for( int i =0; i<n; i++){
+        cin>> arr[i];
+    }
+    int res = findTotal( arr);
+    cout<< res;
+    return 0;
+}
