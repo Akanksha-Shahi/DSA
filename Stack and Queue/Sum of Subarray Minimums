@@ -12,3 +12,54 @@ int sumSub( vector<int> &arr, int n){
     }
     return sum;
 }
+// optimal:
+int subSum( vector<int> &arr. int n){
+    int total= 0;
+    stack<int> st;
+    vector<int> pse(n), nse(n);
+    nse = findNse(arr);
+    pse = findPse(arr);
+    mod = int(1e9+7);
+    for( in ti =0; i<n; i++){
+        left = i -pse[i];
+        right = nse[i]-i;
+        total =( total+(right *left* 1LL* arr[i])%mod)%mod;
+
+    }
+    return total;
+}
+vector<int> findPse( vector<int> &arr){
+    int n = arr.size();
+    vector<int> psee(n);
+    stack<int> st;
+    for( int i =0; i<n; i++){
+        while( st.empty() && arr[st.top()] > arr[i]){
+            st.pop();
+        }
+        psee[i]= st.empty( ) ? -1 : st.top();
+        st.push(i);
+    }
+    return psee;
+}
+vector<int> findNse( vector<int> &arr){
+    int n = arr.size();
+    vector<int> nsee(n);
+    stack<int> st;
+    for( int i =n-1; i>=0; i--){
+        while( !st.empty() && arr[st.top()] >= arr[i]){
+            st.pop();
+        }
+        nsee[i]= st.empty( ) ? n : st.top();
+        st.push(i);
+    }
+    return nsee;
+}
+int main(){
+    int n; cin>> n;
+    vector<int> arr(n);
+    for( int i =0; i<n; i++){
+        cin>> arr[i];
+    }
+    cout<< subSum(arr, n);
+    return 0;
+}
