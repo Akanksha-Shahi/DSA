@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+// brute:
+vector<int> findPse( vector<int> &arr){
+    int n = arr.size();
+    vector<int> psee(n);
+    stack<int> st;
+    for( int i =0; i<n; i++){
+        while( !st.empty() && arr[st.top()] > arr[i]){
+            st.pop();
+        }
+        psee[i]= st.empty( ) ? -1 : st.top();
+        st.push(i);
+    }
+    return psee;
+}
+vector<int> findNse( vector<int> &arr){
+    int n = arr.size();
+    vector<int> nsee(n);
+    stack<int> st;
+    for( int i =n-1; i>=0; i--){
+        while( !st.empty() && arr[st.top()] >= arr[i]){
+            st.pop();
+        }
+        nsee[i]= st.empty( ) ? n : st.top();
+        st.push(i);
+    }
+    return nsee;
+}
+int largestRect( vector<int> &arr){
+    int n = arr.size();
+    vector<int> pse(n), nse(n);
+    pse = findPse(arr);
+    nse = findNse(arr);
+    int maxArea =0;
+    for( int i =0; i<n; i++){
+        int width = nse[i] - pse[i] -1;
+        int area = arr[i] * width;
+        maxArea = max( maxArea, area);
+    }
+    return maxArea;
+}
+int main(){
+    int n; cin>> n;
+    vector<int> arr(n);
+    for( int i =0; i<n; i++){
+        cin>> arr[i];
+    }
+    cout<< largestRect(arr);
+    return 0;
+}
