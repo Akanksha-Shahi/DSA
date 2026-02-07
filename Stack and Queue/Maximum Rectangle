@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+#include <bits/stdc++.h>
+using namespace std;
+// Largest Rectangle in Histogram
+int largestHistogram(vector<int>& heights) {
+    stack<int> st;
+    int maxArea = 0;
+    int n = heights.size();
+    for(int i = 0; i <= n; i++) {
+        int curr = (i == n) ? 0 : heights[i];
+        while(!st.empty() && curr < heights[st.top()]) {
+            int h = heights[st.top()];
+            st.pop();
+            int width;
+            if(st.empty())
+                width = i;
+            else
+                width = i - st.top() - 1;
+            maxArea = max(maxArea, h * width);
+        }
+        st.push(i);
+    }
+    return maxArea;
+}
+// Maximal Rectangle
+int func(vector<vector<int>>& mat) {
+    int n = mat.size();
+    int m = mat[0].size();
+    vector<vector<int>> pSum(n, vector<int>(m, 0));
+    int maxArea = 0;
+    for(int j = 0; j < m; j++) {
+        int sum = 0;
+        for(int i = 0; i < n; i++) {
+            if(mat[i][j] == 1)
+                sum += 1;
+            else
+                sum = 0;
+            pSum[i][j] = sum;
+        }
+    } 
+    for(int i = 0; i < n; i++) {
+        maxArea = max(maxArea, largestHistogram(pSum[i]));
+    }
+    return maxArea;
+}
