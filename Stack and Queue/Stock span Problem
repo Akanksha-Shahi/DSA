@@ -1,0 +1,16 @@
+#include <bits/stdc++.h>
+using namespace std;
+// brute: use a dynamic list
+class StockSpanner{
+    vector<int> arr;
+    StockSpanner(){};
+    int next ( int val){
+        arr.push_back(val);
+        int count =1;
+        for( int i=arr.size()-2; i>=0; i--){
+            if(arr[i]<=val) count++;
+            else break;
+        }
+        return count;
+    }
+};
