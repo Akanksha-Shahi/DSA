@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct Node{
+    int key, val;
+    Node* next;
+    Node* prev;
+    Node( int k , int v){
+        key =k, val =v;
+        next = NULL, prev = NULL;
+    }
+};
+class LRUCache{
+    int capacity;
+    unordered_map<int, int> mp;
+    Node* head;
+    Node* tail;
+    LRUCache( int capacity){
+        this->capacity = capacity;
+        head = new Node(-1, -1);
+        tail = new Node(-1, -1);
+        head->next = tail;
+        tail->prev = head;
+    }
+    int get(int key){
+        if(!mp.has(key)) return -1;
+        Node* node = mp[key];
+        deleteNode(node);
+        addNode(node);
+        return node->val;
+    }
+    void put( int key, int value){
+        if(mp.has(key)){
+            Node* node = mp[key];
+            node->val = value;
+            deleteNode(node);
+            addNode(node);
+        }
+        else{
+            if(mp.size()== capacity){
+                Node* node = tail->prev;
+                deleteNode(node);
+                mp.erase(node->key);
+            }
+            Node* newnode = new Node(key, value);
+            addNode(newnode);
+            mp[key] = newnode;
+        }
+    }
+    void deleteNode(Node* node){
+        prevNode = node->prev;
+        afterNode = node->next;
+        prevNode->next = afterNode;
+        afterNode->prev = prevNode;
+    }
+    void addNode(Node* node){
+        Node* afterNode = head->next;
+        head->next = node;
+        node->prev = head;
+        node->next = afterNode;
+        afterNode->prev = node;
+    }
+}
