@@ -1,0 +1,28 @@
+// Diameter of binary tree
+int diameter(TreeNode* root){
+    int diameter =0;
+    height(root,diameter);
+    return diameter;
+}
+int height(TreeNode* node, int& diameter){
+    if(!node) return 0;
+    int ih = height(node->left, diameter);
+    int rh = height (node->right, diameter);
+    diameter= max(diameter, lh+rh);
+    return max(ih, rh)+1;
+}
+
+
+// Max Path Sum
+int maxPathSum(TreeNode* root){
+    int maxSum = INT_MIN;
+    findMaxSum(root, maxSum);
+    return maxSum;
+}
+int findMaxSum(TreeNode* node, int& maxSum){
+    if( node == NULL) return 0;
+    int leftSum = max(0, findMaxSum(node->left, maxSum));
+    int rightSum = max(0, findMaxSum(node->right, maxSum));
+    maxSum = max(maxSum, leftSum+ rightSum+ node->val);
+    return node->val + max(leftSum, rightSum);
+}
