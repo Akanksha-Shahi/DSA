@@ -1,0 +1,6 @@
+// check if 2 trees are identical or not
+bool isSame(TreeNode* p, TreeNode*q){
+    if( p == NULL || q== NULL) return (p ==q);
+    return (p->val == q->val) && isSame( p->left, q->left) && isSame(p->right, q->right);
+}
+
