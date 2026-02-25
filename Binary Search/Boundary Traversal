@@ -1,0 +1,29 @@
+void leftBound(TreeNode* root, vector<int> &res){
+    TreeNode* cur = root->left;
+    while(cur){
+        if(!isLeaf(cur)) res.push_back(cur->data);
+        if(cur->left) cur = cur->left;
+        else cur = cur->right;
+    }
+}
+void rightBound(TreeNode* root, vector<int> &res){
+    TreeNode* cur = root->right;
+    stack<int> st;
+    while(cur){
+        if(!isLeaf(cur)) st.push(cur->data);
+        if(cur->right) cur = cur->right;
+        else cur = cur->left;
+    }
+    while(!st.empty()){
+        res.push_back(st.top());
+        st.pop();
+    }
+}
+void LeafNodes(TreeNode* root, vector<int> &res){
+    if(isLeaf(root)){
+        res.push_back(root->data);
+        return;
+    }
+    if(root->left) LeafNodes(root->left, res);
+    if(root->right) LeafNodes(root->right, res);
+}
