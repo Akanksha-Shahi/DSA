@@ -1,0 +1,24 @@
+// Top view of binary tree
+// iterative:
+vector<int> topView(TreeNode* root){
+    vector<int> top;
+    if( root == NULL) return top;
+    map<int, int> topNode;
+    queue<pair<TreeNode*, int>> q;
+    q.push({root, 0});
+    while(!q.empty()){
+        auto it = q.front();
+        q.pop();
+        TreeNode* node = it.first;
+        int x = it.second;
+        if( topNode.find(x) == topNode.end()){
+            topNode[x] = node->val;
+        }
+        if( node->left) q.push({node->left, x-1});
+        if( node->right) q.push({node->right, x+1});
+    }
+    for( auto it : topNode){
+        top.push_back(it.second);
+    }
+    return top;
+}
