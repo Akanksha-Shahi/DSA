@@ -1,0 +1,8 @@
+Node* lca( Node* root, Node*p , Node*q){
+    if( root== NULL || root ==p || root ==q) return root;
+    Node* ;eft = lca( root->left, p,q);
+    Node* right = lca( root->right, p,q);
+    if( left == NULL) return right;
+    else if( right == NULL) return left;
+    else return root;
+}   
