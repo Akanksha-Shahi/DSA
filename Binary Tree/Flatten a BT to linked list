@@ -1,0 +1,13 @@
+
+// Flatten a Binary Tree to a Linked list
+void flatten(Node* root){
+    if( root == NULL) return;
+    flatten(root->left);
+    flatten(root->right);
+    Node* tempRight = root->right;
+    root->right = root->left;
+    root->left = NULL;
+    Node* curr = root;
+    while( curr->right) curr= curr->right;
+    curr->right = tempRight;
+}
