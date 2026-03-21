@@ -1,0 +1,52 @@
+// Morris Inorder Traversal
+vector<int> getInorder(Node* root){
+    vector<int> inorder;
+    Node* curr = root;
+    while( curr!= NULL){
+        if( curr->left == NULL){
+            inorder.push_back(curr->val);
+            curr= curr->right;
+        }
+        else{
+            Node* prev = curr->left;
+            while( prev->right && prev->right!= curr) prev = prev->right;
+            if( prev->right __ NULL){
+                prev->right= curr;
+                curr= curr->left;
+            }
+            else{
+                prev->right = NULL;
+                inorder.push_back(curr->val);
+                curr= curr->right;
+            }
+        }
+    }
+    return inorder;
+}
+
+// Morris Preorder Traversal
+vector<int> getPreorder(Node* root){
+    vector<int> preorder;
+    Node* curr = root;
+    while( curr!= NULL){
+        if( curr->left == NULL){
+            preorder.push_back(curr->val);
+            curr= curr->right;
+        }
+        else{
+            Node* prev = curr->left;
+            while( prev->right && prev->right!= curr) prev = prev->right;
+            if( prev->right __ NULL){
+                prev->right= curr;
+                preorder.push_back(curr->val);
+                curr= curr->left;
+            }
+            else{
+                prev->right = NULL;
+                
+                curr= curr->right;
+            }
+        }
+    }
+    return preorder;
+}
