@@ -1,0 +1,44 @@
+String serialize(Node* root){
+    if(!root) return "";
+    string s = "";
+    queue<Node*> q;
+    q.push(root);
+    while(!q.empty()){
+        Node* curNode= q.front();
+        q.pop();
+        if(curNode== NULL) s.append("#,");
+        else s.append(to_string(curNode->val)+',');
+        if(curNode!= NULL){
+            q.push(curNode->left);
+            q.push(curNode->right);
+        }
+    }
+    cout<<s;
+    return s;
+}
+Node* deserialize(string data){
+    if(data.size()==0) return NULL;
+    stringstream s(data);  // stringstream is used to read the string data
+    string str;
+    getline(s, str, ',');  // getline is used to read the string data until the comma is found
+    Node* root = new Node(stoi(str));   // stoi is used to convert the string data to integer
+    queue<Node*> q;
+    q.push(root);
+    while(!q.empty()){
+        Node* curNode = q.front();
+        q.pop();
+        getline(s, str, ',');
+        if(str=="#") curNode->left = NULL;
+        else{
+            curNode->left = new Node(stoi(str));
+            q.push(curNode->left);
+        }
+        getline(s, str, ',');
+        if(str=="#") curNode->right = NULL;
+        else{
+            curNode->right = new Node(stoi(str));
+            q.push(curNode->right);
+        }
+    }
+    return root;
+}
