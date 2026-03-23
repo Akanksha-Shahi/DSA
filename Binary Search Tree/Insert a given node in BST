@@ -1,0 +1,22 @@
+// Insert a given Node in Binary Search Tree
+Node* insertBST(Node* root, int val){
+    if( root== NULL) return new Node(val);
+    Node* curr = root;
+    while(true){
+        if( curr->val <= val){
+            if( curr->right !+ NULL) curr= curr->right;
+            else{
+                curr->right = new Node(val);
+                break;
+            }
+        }
+        else{
+            if(curr->left != NULL) curr = curr->left;
+            else{
+                curr->left = new Node(val);
+                break;
+            }
+        }
+    }
+    return root;
+}
