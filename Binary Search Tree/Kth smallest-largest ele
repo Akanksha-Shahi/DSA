@@ -1,0 +1,38 @@
+// Kth Smallest element in BST ( ITERATIVE APPROACH)
+int kthele(Node* root, int k){
+    stack<Node*> st;
+    Node* curr= root;
+    while(true){
+        while(curr){
+            st.push(curr);
+            curr= curr->left;
+        }
+        curr = st.top();
+        st.pop();
+        k--;
+        if( k==0) return curr->val;
+        curr = curr->right;
+    }
+}
+
+
+// Kth largest element in BST 
+class Solution{
+public:
+    int ans =-1;
+    int count =0;
+    void reverseInorder( Node* root, int k){
+        if(!root) return;
+        reverseInorder(root->right,k);
+        count++;
+        if(count == k){
+            ans = root->val;
+            return;
+        }
+        reverseInorder(root->left,k);
+    }    
+    int Kthlargest(Node* root, int k){
+        reverseInorder(root, k);
+        return ans;
+    }
+}
