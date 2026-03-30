@@ -1,0 +1,42 @@
+// brute:
+bool areIso(string &s, string &t){
+    int n = s.length(), m= t.length();
+    if( n!=m) return false;
+    for( int i =0; i<n; i++){
+        for( int j=i+1; j<n; j++){
+            if(s[i]==s[j] && t[i]!=t[j]) return false;
+            if(s[i]!= s[j] && t[i]== t[j]) return false;
+        }
+    }
+    return true;
+}
+// better:
+bool areISOME(string &s, string &t){
+    if(s.length() != t.length()) return false;
+    unordered_map<char, char> mapST, mapTS;
+    for( int i =0; i<s.length(); i++){
+        char cs = s[i], ct=t[i];
+        if(mapST.count(cs) && mapST[cs] != ct) return false;
+        if(mapTS.count(ct) && mapTS[ct] != cs) return false;
+        mapST[cs] = ct;
+        mapTS[ct] = cs;
+    }
+    return true;
+}
+// optimal
+bool areISOMOR(string &s, string &t){
+    if(s.length() != t.length()) return false;
+    map<char,char> mp;
+    set<char> usedChar;
+    for( int i =0; i<s.length(); i++){
+        char cs = s[i], ct=t[i];
+        if(mp.count(cs)) {
+            if(mp[cs] != ct) return false;
+        } else {
+            if(usedChar.count(ct)) return false;
+            mp[cs] = ct;
+            usedChar.insert(ct);
+        }
+    }
+    return true;
+}
