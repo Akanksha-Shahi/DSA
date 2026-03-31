@@ -1,0 +1,32 @@
+// Valid Anagrams
+// brute:
+bool  isAna(string &s1, string &s2){
+    if( s1.length() != s2.length()) return false;
+    sort(s1.begin(), s1.end());
+    sort(s2.begin(), s2.end());
+    return s1== s2; 
+}
+// better:
+bool isAnagram(string &s1, string &s2){
+    if( s1.length() != s2.length()) return false;
+    unordered_map<char, int> count;
+    for( char ch: s1) count[ch]++;
+    for( char ch: s2){
+        if(count.count(ch) ==0 || count[ch] ==0) return false;
+        count[ch]--;
+    }
+    return true;
+}
+// optimal
+bool  isAnag(string &s1, string &s2){
+    if( s1.length() != s2.length()) return false;
+    int a[26]={0};
+    for( int i =0; i<s1.length(); i++){
+        a[s1[i]-'a']++;
+        a[s2[i]-'a']--;
+    }
+    for( int i =0; i<26; i++){
+        if(a[i]) return false;
+    }
+    return true;
+} 
