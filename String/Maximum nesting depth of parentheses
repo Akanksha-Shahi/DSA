@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+// Maximum nesting depth of parentheses
+// better:
+class Solution{
+    public:
+        int maxDepth(string s){
+            int ans =0, n=0;
+            stack<int> st;
+            for(auto ch:s){
+                if(ch=='(') st.push(ch);
+                else if( ch ==')') st.pop();
+                n = st.size();
+                ans = ans<n?n:ans;
+           }
+           return ans;
+        }
+}    
+// optimal:
+int maxDepth1(string s){
+    int an s=0, depth =0;
+    for( auto ch:s){
+        if( ch =='(') depth++;
+        else if( ch ==')') depth--;
+        ans = ans<depth?depth:ans;
+    }
+    return ans;
+}
