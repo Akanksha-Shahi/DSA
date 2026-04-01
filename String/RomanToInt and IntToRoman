@@ -1,0 +1,29 @@
+// Roman to Integer 
+int romanToint( string s){
+    map<char, int> m={{'I',1},{'V', 5},{'X',10},{'L', 50},{'C',100},{'D', 500},{'M', 1000}};
+    int i =0, n =s.size();
+    int ans =0;
+    while( i<n){
+        if(i+1<n && m[s[i]]<m[s[i+1]]){
+            ans +=m[s[i]]-m[s[i]];
+            i+=2;
+        }
+        else{
+            ans += m[s[i]];
+            i++;
+        }
+    }
+    return ans;
+}
+// Integer to Roman  
+string intToRoman( int num){
+    vector<pair<int, string>> m = {{1000,"M"},{900,"CM"},{500,"D"},{400,"CD"},{100,"C"},{90,"XC"},{50,"L"},{40,"XL"},{10,"X"},{9,"IX"},{5,"V"},{4,"IV"},{1,"I"}};
+    string ans="";
+    for( auto& [val, sym]:m){
+        while(num>=val){
+            ans+=sym;
+            num-=val;
+        }
+    }
+    return ans;
+}     
