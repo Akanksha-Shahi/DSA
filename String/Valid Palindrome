@@ -1,0 +1,29 @@
+// Valid Palindrome
+bool isPalin(string &s){
+    int i =0, j =s.size()-1;
+    while(i<j){
+        if(s[i]!=s[j]) return false;
+        i++;
+        j--;
+    }
+    return true;
+}
+// other way:
+string correctFormat( string s){
+    string ans ="";
+    for( char i:s){
+        if((i>='a' && i<='z') || (i>='A' && i<='Z')) ans +=(char)tolower(i);
+        else if( i>='0' && i<='9') ans+=i;
+    }
+    return ans;
+}
+bool isPalin1(string &s){
+    string ts= correctFormat(s);
+    int i =0, j =ts.size()-1;
+    while(i<j){
+        if(ts[i]!=ts[j]) return false;
+        i++;
+        j--;
+    }
+    return true;
+}
