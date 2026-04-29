@@ -1,0 +1,60 @@
+// representation of graph in C++ using adjacency matrix
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int n,m;
+    cin>>n>>m;
+    int adj[n+1][m+1];
+    for( int i =0; i<m; i++){
+        int u,v;
+        cin>>u>>v;
+        adj[u][v]= 1;
+        adj[v][u]= 1;
+    }
+    return 0;
+}
+// representation of graph in C++ using adjacency list
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int n,m;
+    cin>>n>>m;
+    vector<int> adj[n+1];
+    for( int i =0; i<m; i++){
+        int u,v;
+        cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    return 0;
+}
+// if there is directed graph : 
+// usually we will be using adjacency list rather than matrix due to space issue
+int main(){
+    int n,m;
+    cin>>n>>m;
+    vector<int> adj[n+1];
+    // space : O[e]
+    for( int i =0; i<m; i++){
+        int u,v;
+        cin>>u>>v;
+        adj[u].push_back(v);
+    }
+    return 0;
+}
+// for weighted graph:
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int n,m;
+    cin>>n>>m;
+    int adj[n+1][m+1];
+    for( int i =0; i<m; i++){
+        int u,v,wt;
+        cin>>u>>v>>wt;
+        adj[u][v]= wt;
+        adj[v][u]= wt;
+    }
+   return 0;
+}  
+
