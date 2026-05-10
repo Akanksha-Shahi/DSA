@@ -26,6 +26,19 @@ public:
             rank[ulp_u]++;
         }
     }
+    void unionBySize( int u, int v){
+        int ulp_u = findUpar(u);
+        int ulp_v = findUpar(v);
+        if( ulp_u == ulp_v) return;
+        if( rank[ulp_u]< rank[ulp_v]){
+            parent[ulp_u]= ulp_v;
+            rank[ulp_v]+= rank[ulp_u];
+        }
+        else{
+            parent[ulp_v]= ulp_u;
+            rank[ulp_u]+= rank[ulp_v];
+        }
+    }
 };
 int main(){
     freopen("input.txt", "r", stdin);
