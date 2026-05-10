@@ -1,0 +1,16 @@
+//  Number of Provinces using Disjoint Set
+int numProvinces(vector<vector<int>> adj, int V){
+    Disjoint ds(V);
+    for( int i =0; i<V; i++){
+        for( int j =0; j<V; j++){
+            if(Adj[i][j]==1){
+                ds.unionBySize(i,j);
+            }
+        }
+    }
+    int count =0;
+    for( int i =0; i<V; i++){
+        if(ds.findUpar(i)==i) count++;
+    }
+    return count;
+}
