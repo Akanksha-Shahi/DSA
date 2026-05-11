@@ -1,0 +1,49 @@
+// Making a Large Island - DSU
+bool isValid( int row, int col, int n){
+    return newr>=0 && newr<n && newc>=0 && newc<n;
+}
+int maxConnection(vector<vector<int>> & grid){
+    int n = grid.size();
+    Disjoint ds(n*n);
+    for( int row =0; row<n; row++){
+        for( int col=0; col<n; col++){
+            if(grid[row][col]== 0) continue;
+            int dr[]={-1,0,1,0};
+            int dc[]={0,-1,0,1};
+            for( int ind =0; ind<4; ind++){
+                int newr = row+ dr[ind];
+                int newc = col +dc[ind];
+                if(isValid(newr, newc, n) && grid[newr][newc]==1){
+                    int nodeNo = row*n+col;
+                    int adjNodeNo = newr*n + newc;
+                    ds.unionBySize(nodeNo, adjNodeNo);
+                }
+            }
+        }
+    }
+    int mx =0;
+    for(int row =0; row<n; row++){
+        for( int col =0; col<n; col++){
+            if(grid[row][col]== 1) continue;
+            int dr[]={-1,0,1,0};
+            int dc[]={0,-1,0,1};
+            set<int> components;
+            for( int ind =0; ind<4; ind++){
+                int newr = row+dr[ind];
+                int newc = col+dc[ind];
+                if(isValid(newr, newc,n)){
+                    if(grid[newr][newc]==1){
+                        components.insert(ds.findUpar(newr*n+newc));
+                    }
+                }
+            }
+            int sizeTotal =1;
+            for( auto it: components) sizeTotal+=ds.size[it];
+            mx = max(mx, sizeTotal);
+        }
+    }
+    for ( int cellNo =0; cellNo<n*n; cellNo++){
+        mx = max(mx, ds.size[ds.findUpar(cellNo)]);
+    }
+    return mx;
+}
