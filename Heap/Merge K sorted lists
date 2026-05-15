@@ -1,0 +1,32 @@
+// Merge K sorted lists
+class Node{
+    public:
+    int data;
+    Node* next;
+    Node( int x){
+        data =x;
+        next = nullptr;
+    }
+};
+class Compare{
+    public:
+    bool operator()(Node* a, Node*b){
+        return a->data > b->data;
+    }
+};
+Node* mergeKLists(vector<Node*>& lists) {
+    priority_queue<Node*, vector<Node*>, Compare> minHeap;
+    for (Node* list : lists) {
+        if (list) minHeap.push(list);
+    }
+    Node* dummy = new Node(0);
+    Node* tail = dummy;
+    while (!minHeap.empty()) {
+        Node* smallest = minHeap.top();
+        minHeap.pop();
+        tail->next = smallest;
+        tail = tail->next;
+        if (smallest->next) minHeap.push(smallest->next);
+    }
+    return dummy->next;
+}
