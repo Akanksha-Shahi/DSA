@@ -1,0 +1,20 @@
+// Hands of Straights
+bool isstraight(vector<int>& hand, int grouSize){
+    if(hand.size() % grouSize != 0) return false;
+    map<int, int> freq;
+    for( int card: hand) freq[card]++;
+    auto it = freq.begin();
+    while( it != freq.end()){
+        if(it->second ==0){
+            ++it; continue;
+        }
+        int start = it->first;
+        int count = it->second;
+        for( int i =0; i<grouSize; ++i){
+            if(freq[start + i] < count) return false;
+            freq[start + i] -= count;
+        }
+        ++it;
+    }
+    return true;
+}
