@@ -1,0 +1,31 @@
+// Replace elements by its rank in array
+// brute:
+vector<int> replacewithRank(vector<int>& arr){
+    vector<int> rankArr;
+    for(int i =0; i<arr.size(); i++){
+        unordered_set<int> smaller;
+        for( int j =0; j<arr.size(); j++){
+            if(arr[j] < arr[i]) smaller.insert(arr[j]);
+        }
+        int rank = smaller.size()+1;
+        rankArr.push_back(rank);
+    }
+    return rankArr;
+}
+// optimal:
+vector<int> replacewithRank(vector<int>& arr){
+    vector<int> sortedArr = arr;
+    sort(sortedArr.begin(), sortedArr.end());
+    unordered_map<int, int> rankMap;
+    int rank =1;
+    for( int num : sortedArr){
+        if( rankMap.find(num) == rankMap.end()){
+            rankMap[num] = rank++;
+        }
+    }
+    vector<int> rankArr;
+    for( int num : arr){
+        rankArr.push_back(rankMap[num]);
+    }
+    return rankArr;
+}
