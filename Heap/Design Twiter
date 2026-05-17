@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+// Design Twitter
+class Twitter {
+    private:
+        unordered_map<int, vector<pair<int, int>>> tweets; // userId -> list of (timestamp, tweetId)
+        unordered_map<int, unordered_set<int>> following; // userId -> set of followees
+        int time;
+    public:
+        Twitter() {
+            time = 0;
+        }   
+        void postTweet (int userId, int tweetId){
+            tweets[userId].push_back({time++, tweetId});
+        } 
+        vector<int> getNewsFeed( int userId){
+            priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq; // max heap based on timestamp
+            for( auto & t: tweets[userId]){
+                pq.push(t);
+                if(pq.size() > 10) pq.pop();
+            }
+            for( int followee : following[userId]){
+                for(auto& t: tweets[followee]){
+                    pq.push(t);
+                    if(pq.size() >10) pq.pop();
+                }
+            }
+            vector<int> result;
+            while(!pq.empty()){
+                result.push_back(pq.top().second);
+                pq.pop();
+            }
+            reverse(result.begin(), result.end());
+            return result;
+        }
+        void follow( int followerId, int followeeId){
+            following[followerId].insert(followeeId);
+        }
+        void unfollow( int followerId, int followeeId){
+            following[followerId].erase(followeeId);
+        }
+
+}
