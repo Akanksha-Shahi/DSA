@@ -1,0 +1,37 @@
+// Frog jump with K distance
+// MEMOIZATION
+int solveUntil( int ind, vector<int>& height, vector<int>& dp, int k){
+    if( ind==0) return 0;
+    if(dp[ind] != -1) return dp[ind];
+    int minEnergy = INT_MAX;
+    for( int j =1; j<=k; j++){
+        if( ind-j >=0){
+            int jumpEnergy = solveUntil(ind-j, height, dp, k) + abs(height[ind]-height[ind-j]);
+            minEnergy = min( minEnergy, jumpEnergy);
+        }
+    }
+    return dp[ind]= minEnergy;
+}
+int solve ( int n , vector<int>& height, int k){
+    vector<int> dp(n, -1);
+    return solveUntil(n-1, height, dp, k);
+}
+// TABULATION
+int solveUntil( int n, vector<int>& height, vector<int>& dp, int k){
+    dp[0]=0;
+    for( int i =1; i<n; i++){
+        int mmSteps = INT_MAX;
+        for( in tj =1; j<=k; j++){
+            if( i-j >=0){
+                int jump = dp[i-j]+abs(height[i]-height[i-j]);
+                mmSteps = min( mmSteps, jump);
+            }
+        }
+        dp[i]=mmSteps;
+    }
+    return dp[n-1];
+}
+int solve ( int n , vector<int>& height, int k){
+    vector<int> dp(n, -1);
+    return solveUntil(n, height, dp, k);
+}    
