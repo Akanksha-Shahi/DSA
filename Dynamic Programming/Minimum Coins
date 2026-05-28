@@ -1,0 +1,49 @@
+// Minimum Coins
+// memoization
+int coinChange(vector<int>& coins, int amount){
+    vector<int> dp(amount+1, -2);
+    return helper(coins, amount,dp);
+}
+int helper(vector<int>& coins, int rem, vector<int>& dp){
+    if( rem ==0) return 0;
+    if( rem<0) return -1;
+    if(dp[rem]!=-2) return dp[rem];
+    int mini =INT_MAX;
+    for( int coin: coins){
+        int res = helper(coins, rem -coin, dp);
+        if(res>=0 && res<mini)mini =1+ res;
+    }
+    dp[rem]= (mini == INT_MAX) ? -1 : mini;
+    return dp[rem];
+}
+// tabulation    
+int coinChange(vector<int>& coins, int amount){
+    vector<int> dp(amount+1, amount+1);
+    dp[0]=0;
+    for( int i =1; i<=amount; i++){
+        for( int coin: coins){
+            if( coin <= i) dp[i] = min(dp[i], 1+ dp[i-coin]);
+        }
+    }
+    return (dp[amount] > amount) ? -1 : dp[amount];
+}
+// space optimization
+int minEle(vector<int>& arr, int T){
+    int n = arr.size();
+    vector<int> prev(T+1, 0);
+    vector<int> curr(T+1, 0);
+    for( int t =0; t<=T; t++){
+        if( t%arr[0] ==0) prev[t]= t/arr[0];
+        else prev[t]= 1e9;
+    }
+    for( int i =1; i<n; i++){
+        for( int t =0; t<=T; t++){
+            int notTake = prev[t];
+            int take =1e9;
+            if( arr[i] <= t) take = 1+ curr[t-arr[i]];
+            curr[t] = min(take, notTake);
+        }
+        prev = curr;
+    }
+    return (prev[T] >= 1e9) ? -1 : prev[T];
+}
