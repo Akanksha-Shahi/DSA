@@ -1,0 +1,53 @@
+// Target Sum
+// memoization
+int findTarget( vector<int>& nums, int target){
+    int totsum = accumulate( nums.begin(), nums.end(),0);
+    if((totSum-target) <0 || (totSum-target)%2 !=0) return 0;
+    int subset = (totsum - target)/2;
+    vector<vector<int>> dp(nums.size(), vector<int>(subset+1, -1));
+    return countSubset(nums.size()-1, subset, nums, dp);
+}
+int countSubsets(vector<int>& nums, int ind, int target, vector<vector<int>>& dp){
+    if( ind ==0){
+        if( target ==0 && nums[0] ==0) return 2;
+        if( target ==0 || target == nums[0]) return 1;
+        return 0;
+    }
+    if( dp[ind][target] != -1) return dp[ind][target];
+    int notTake = countSubsets(nums, ind-1, target, dp);
+    int take =0;
+    if( nums[ind] <= target) take = countSubsets(nums, ind-1, target-nums[ind], dp);
+    return dp[ind][target] = notTake + take;
+}
+// tabulation
+int findtarget( vector<int>& nums, int target){
+    int n = nums.size();
+    int totalSum = accumulate(nums.begin(), nums.end(), 0);
+    if((totalSum +target)%2 !=0 || abs(target)>totalSum) return 0;
+    int newTarget =(totalSum+ target)/2;
+    vector<vector<int>> dp(n+1, vector<int>(newtarget+1, 0));
+    for( int i =0; i<=n; i++) dp[i][0]=1;
+    for( int t =0; t<=newTarget; t++){
+        for(int j =0; j<= newtarget; j++){
+            dp[i][j]=dp[i-1][j];
+            if( nums[i-1] <= t) dp[i][j] += dp[i-1][t-nums[i-1]];
+        }
+    }
+    return dp[n][newtarget];
+}
+// space optimization
+int findTargetSumWays( vector<int>& nums, int target){
+    int total = accumulate(nums.begin(), nums.end(), 0);
+    if((total+target)%2 !=0 || abs(target)>total) return 0;
+    int newTarget =(total+ target)/2;
+    vector<int> prev(newTarget+1, 0), curr(newTarget+1,0);    
+    prev[0]=1;
+    for( int t =0; t<=newTarget; t++){
+        for( int i =0; i<nums.size(); i++){
+            curr[t] = prev[t];
+            if( nums[i] <= t) curr[t] += prev[t-nums[i]];
+        }
+        prev = curr;
+    }
+    return prev[newTarget];
+}
