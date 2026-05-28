@@ -1,0 +1,44 @@
+// Assign Cookies
+// memoization
+int findContent(vector<int>& student, vector<int>& cookie){
+    sort(student.begin(), student.end());
+    sort(cookie.begin(), cookie.end());
+    vector<vector<int>> memo(student.size(), vector<int>(cookie.size(), -1));
+    return helper(0,0,student, cookie, memo);
+}
+int helper( int studentIdx, int cookieIdx, vector<int>& student, vector<int>& cookie, vector<vector<int>>& memo){
+    if( studentIdx >= student.size() || cookieIdx >= cookie.size()) return 0;
+    if( memo[studentIdx][cookieIdx] != -1) return memo[studentIdx][cookieIdx];
+    int result =0;
+    if( cookie[cookieIdx]>= student[studentIdx]) result = max(result, 1+ helper(studentIdx+1, cookieIdx+1, student, cookie, memo));
+    return memo[studentIdx][cookieIdx] = max(result, helper(studentIdx, cookieIdx+1, student, cookie, memo));
+}
+// tabulation
+int findContent(vector<int>& student, vector<int>& cookie){
+    int n = student.size(), m = cookie.size();
+    sort(student.begin(), student.end());   
+    sort(cookie.begin(), cookie.end());
+    vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
+    for( int i = n-1; i>=0; --i){
+        for( int j =m-1; j>=0; --j){
+            int skip = dp[i][j+1];
+            int take =0;
+            if( cookie[j]>= student[i]) take = 1+ dp[i+1][j+1];
+            dp[i][j]= max(skip, take);
+        }
+    }
+    return dp[0][0];    
+}
+// space optimization
+int findContent(vector<int>& student, vector<int>& cookie){
+    sort(student.begin(), student.end());
+    sort(cookie.begin(), cookie.end());
+    int studentIdx=0, cookieIdx =0;
+    while( studentIdx < student.size() && cookieIdx < cookie.size()){
+        if( cookie[cookieIdx] >= student[studentIdx]) {
+            studentIdx++;
+        } 
+        cookieIdx++;
+    }
+    return studentIdx;
+}
