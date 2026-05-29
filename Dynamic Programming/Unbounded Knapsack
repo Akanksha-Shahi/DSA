@@ -1,0 +1,42 @@
+// Unbounded Knapsack
+// memoization
+int knapSack( vector<int>& wt, vector<int>& val, int ind, int W, vector<vector<int>>& dp){
+    if( ind ==0) return (W/wt[0])* val[0];
+    if( dp[ind][W] != -1) return dp[ind][W];
+    int notTaken = knapSack(wt, val, ind-1, W, dp);
+    int taken =INT_MIN;
+    if( wt[ind] <= W) taken = val[ind] + knapSack(wt, val, ind, W-wt[ind], dp);
+    return dp[ind][W] = max(notTaken, taken);
+}
+int unbounded(int n , int W, vector<int>& val, vector<int>& wt){
+    vector<vector<int>> dp(n, vector<int>(W+1, -1));
+    return knapSack(wt, val, n-1, W, dp);
+}
+// tabulation
+int unbounded( in tn , int W, vector<int>& val, vector<int>& wt){
+    vector<vector<int>> dp(n, vector<int>(W+1,0));
+    for( int i = wt[0]; i<=W; i++) dp[0][i]=(i/wt[0])* val[0];
+    for( int ind =1; ind<n; ind++){
+        for( int w =0; w<=W; w++){
+            int notTaken = dp[ind-1][w];
+            int taken =INT_MIN;
+            if( wt[ind] <= w) taken = val[ind] + dp[ind][w-wt[ind]];
+            dp[ind][w] = max(notTaken, taken);
+        }
+    }
+    return dp[n-1][W];
+}
+// space optimization
+int unbounded( int n , int W, vector<int>& val, vector<int>& wt){
+    vector<int> curr(W+1, 0);
+    for( int i = wt[0]; i<=W; i++) curr[i]=(i/wt[0])* val[0];
+    for( int ind =1; ind<n; ind++){
+        for( int w =0; w<=W; w++){
+            int notTaken = curr[w];
+            int taken =INT_MIN;
+            if( wt[ind] <= w) taken = val[ind] + curr[w-wt[ind]];
+            curr[w] = max(notTaken, taken);
+        }
+    }
+    return curr[W];
+}
