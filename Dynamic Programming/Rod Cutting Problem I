@@ -1,0 +1,50 @@
+// Rod Cutting Problem i
+// memoization
+int rodCut(vector<int> price, int n){
+    vector<vector<int>> dp(n, vector<int>(n+1, 0));
+    for( int length =0; length<=n; length++){
+        dp[0][length] = length * price[0];
+    }
+    for( int ind =1; ind<n; ind++){
+        for( int length =0; length<=n; length++){
+            int notCut = dp[ind-1][length];
+            int cut =INT_MIN;
+            if( ind+1 <= length) cut = price[ind] + dp[ind][length-ind-1];
+            dp[ind][length] = max(notCut, cut);
+        }
+    }
+    returnn dp[n-1][n];
+}
+// tabulation
+int rodCut(vector<int> price, int n){
+    vector<vector<int>> dp(n, vector<int>(n+1, 0));
+    for( int length =0; length<=n; length++){
+        dp[0][length] = length * price[0];
+    }
+    for( int ind =1; ind<n; ind++){
+        for( int length =0; length<=n; length++){
+            int notCut = 0+dp[ind -1][length];
+            int cut =INT_MIN;
+            if( ind+1 <= length) cut = price[ind] + dp[ind][length-ind-1];
+            dp[ind][length] = max(notCut, cut);
+        }
+    }
+    return dp[n-1][n];
+}
+// space optimization
+int rodcut(vector<int> price, int n){
+    vector<int> prev(n+1, 0), curr(n+1, 0);
+    for( int length =0; length<=n; length++){
+        prev[length] = length * price[0];
+    }
+    for( int ind =1; ind<n; ind++){
+        for( int length =0; length<=n; length++){
+            int notCut = 0+prev[length];
+            int cut =INT_MIN;
+            if( ind+1 <= length) cut = price[ind] + curr[length-ind-1];
+            curr[length] = max(notCut, cut);
+        }
+        prev = curr;
+    }
+    return prev[n];
+}
