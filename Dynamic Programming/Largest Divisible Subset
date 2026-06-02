@@ -1,0 +1,29 @@
+// Largest Divisible Subset 
+vector<int> largediv(vector<int> nums){
+    int n = nums.size();
+    sort( nums.begin(), nums.end());
+    vector<int> ans;
+    vector<int> dp(n,1);
+    vector<int> parent(n);
+    int lastind =0, maxlen =0;
+    for( int i =0; i<n; i++){
+        parent[i]=i;
+        for(int prev =0; prev<i; prev++){
+            if(nums[i]% nums[prev]==0 && dp[i]<dp[prev]+1){
+                dp[i]= dp[prev]+1;
+                parent[i] = prev;
+            }
+        }
+        if(dp[i]>maxlen){
+            lastind = i;
+            maxlen = dp[i];
+        }
+    }
+    int i = lastind;
+    while( parent[i] != i){
+        ans.push_back(nums[i]);
+        i = parent[i];
+    }
+    ans.push_back(nums[i]);
+    return ans;
+}
