@@ -1,0 +1,29 @@
+// Printing Longest Increasing Subsequence 
+vector<int> longincreasin(vector<int>& nums){
+    int n = nums.size();
+    vector<int> dp(n,1);
+    vector<int> prev(n,-1);
+    for( int i =1; i<n; i++){
+        for( int j =0; j<i; j++){
+            if(nums[j]< nums[i] && dp[j]+1> dp[i]){
+                dp[i] = dp[j]+1;
+                prev[i]=j;
+            }
+        }
+    }
+    int maxlen =0, maxind=0;
+    for( int i =0; i<n; i++){
+        if( dp[i]>maxlen){
+            maxlen = dp[i];
+            maxind=i;
+        }
+    }
+    vector<int> lisSeq;
+    int curr = maxind;
+    while( curr != -1){
+        linSeq.push_back(nums[curr]);
+        curr= prev[curr];
+    }
+    reverse(lisSeq.begin(), lisSeq.end());
+    return lisSeq;
+}
