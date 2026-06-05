@@ -1,0 +1,33 @@
+// Partition Array for Maximum Sum
+// memoization
+int helper( constvector<int>& arr, int k, int start, vector<int>& memo){
+    int n = ( int) arr.size();
+    if( start ==n) return 0;
+    if( memo[start] != -1) return memo[start];
+    int maxSum =0, maxEle =0;
+    for( int length=1; lenght<=k && start+length<=n; length++){
+        maxele = max(maxEle, arr[start+length-1]);
+        int currentSum = maxEle* length+helper(arr,k,start+length,memo);
+        maxSum = max( maxSum, currentSum);
+    }
+    return memo[start]= maxSum;
+}int maxSUmAfter( vector<int>& arr, int k){
+    int n = (int) arr.size();
+    vector<int> memo(n, -1);
+    return helper(arr, k, 0, memo);
+}
+//tabulation
+int maxSumAfter(vector<int>&arr, int k){
+    int n =( int)arr.size();
+    vector<int> dp(n+1,0);
+    for( int i =n-1; i>=0; i--){
+        int maxEle =0, maxSum=0;
+        for( int length =1; length<=k && i+length<=n; length++){
+            maxEle= max(maxEle, arr[i+length-1]);
+            int currentSum = maxEle* length+ dp[i+length];
+            maxSum = max(maxSum, currentSum);
+        }
+        dp[i] = maxSum;
+    }
+    return dp[0];
+}
