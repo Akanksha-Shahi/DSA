@@ -1,0 +1,108 @@
+// Evaluate Boolean Expression to True
+// brute
+const int mod = 100000007;
+int f( int i, int j, bool isTrue, string& exp){
+    if( i>j) return 0;
+    if( i==j){
+        if( isTrue) return exp[i]=='T';
+        else return exp[i]=='F';
+    }
+    int ways =0;
+    for( int ind =i+1; ind<=j-1; ind+=2){
+        int leftTrue = f(i, ind-1, true, exp);
+        int leftFalse = f(i, ind-1, false, exp);
+        int rightTrue = f(ind+1, j, true, exp);
+        int rightFalse = f(ind+1, j, false, exp);
+        if( exp[ind] == '&'){
+            if(isTrue) ways = (ways+ leftTrue* rightTrue)%mod;
+            else ways = (ways+ leftFalse* rightFalse + leftTrue* rightFalse + leftFalse* rightTrue)%mod;
+        }
+        else if( exp[ind] == '|'){
+            if(isTrue) ways = (ways+ leftTrue* rightTrue + leftTrue* rightFalse + leftFalse* rightTrue)%mod;
+            else ways = (ways+ leftFalse* rightFalse)%mod;
+        }
+        else{
+            if(isTrue) ways = (ways+ leftTrue* rightFalse + leftFalse* rightTrue)%mod;
+            else ways = (ways+ leftTrue* rightTrue + leftFalse* rightFalse)%mod;
+        }
+    }
+    return ways%mod;
+}
+int evaluate(string& exp){
+    int n = exp.size();
+    return f(0, n-1,1,exp);
+}
+// better
+const int mod = 100000007;
+int f( int i, int j, bool isTrue, string& exp, vector<vector<vector<int>>>& dp){
+    if( i>j) return 0;
+    if( i==j){
+        if( isTrue) return exp[i]=='T';
+        else return exp[i]=='F';
+    }
+    if(dp[i][j][isTrue]!=-1) return dp[i][j][isTrue];
+    int ways =0;
+    for( int ind =i+1; ind<=j-1; ind+=2){
+        int leftTrue = f(i, ind-1, true, exp, dp);
+        int leftFalse = f(i, ind-1, false, exp, dp);
+        int rightTrue = f(ind+1, j, true, exp, dp);
+        int rightFalse = f(ind+1, j, false, exp, dp);
+        if( exp[ind] == '&'){
+            if(isTrue) ways = (ways+ leftTrue* rightTrue)%mod;
+            else ways = (ways+ leftFalse* rightFalse + leftTrue* rightFalse + leftFalse* rightTrue)%mod;
+        }
+        else if( exp[ind] == '|'){
+            if(isTrue) ways = (ways+ leftTrue* rightTrue + leftTrue* rightFalse + leftFalse* rightTrue)%mod;
+            else ways = (ways+ leftFalse* rightFalse)%mod;
+        }
+        else{
+            if(isTrue) ways = (ways+ leftTrue* rightFalse + leftFalse* rightTrue)%mod;
+            else ways = (ways+ leftTrue* rightTrue + leftFalse* rightFalse)%mod;
+        }
+    }
+    return dp[i][j][isTrue] = ways;
+}
+int evaluate(string& exp){
+    int n = exp.size();
+    vector<vector<vector<int>>> dp(n, vector<vector<int>>(n, vector<int>(2,-1)));
+    return f(0, n-1,1,exp,dp);
+}
+// optimal
+const int mod =100000007;
+int evaluate(string& exp){
+    int n = exp.size();
+    vector<vector<vector<int>>> dp(n, vector<vector<int>>(n, vector<int>>(2,0)));
+    for( int i =n-1; i>=0; i--){
+        for( int j =0; j<=n-1; j++){
+            if(i>j) continue;
+            for( int isTrue=0; isTrue<=1; isTrue++){
+                if( i==j){
+                    if(isTrue==1) dp[i][j][isTrue] = exp[i]=='T';
+                    else dp[i][j][isTrue]=exp[i]=='F';
+                    continue;
+                }
+                int ways =0;
+                for( int ind =i+1; ind<=j-1; ind+=2){
+                    int leftTrue = dp[i][ind-1][1];
+                    int leftFalse = dp[i][ind-1][0];
+                    int rightTrue = dp[ind+1][j][1];
+                    int rightFalse = dp[ind+1][j][0];
+                    if( exp[ind] == '&'){
+                        if(isTrue) ways = (ways+ leftTrue* rightTrue)%mod;
+                        else ways = (ways+ leftFalse* rightFalse + leftTrue* rightFalse + leftFalse* rightTrue)%mod;
+                    }
+                    else if( exp[ind] == '|'){
+                        if(isTrue) ways = (ways+ leftTrue* rightTrue + leftTrue* rightFalse + leftFalse* rightTrue)%mod;
+                        else ways = (ways+ leftFalse* rightFalse)%mod;
+                    }
+                    else{
+                        if(isTrue) ways = (ways+ leftTrue* rightFalse + leftFalse* rightTrue)%mod;
+                        else ways = (ways+ leftTrue* rightTrue + leftFalse* rightFalse)%mod;
+                    }
+                }
+                dp[i][j][isTrue] = ways;        
+            }
+        }
+    }
+    return dp[0][n-1][1];
+}
